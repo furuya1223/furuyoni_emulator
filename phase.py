@@ -21,7 +21,7 @@ class Phase:
         board.start_distance = board.distance
         # TODO: 間合にある造花結晶の処理
         # 集中力+1
-        board.players[player_type].vifor.recover()
+        board.players[player_type].vigor.recover()
 
         # TODO: 付与札の結晶の移動と破棄時効果の解決
 
@@ -121,9 +121,9 @@ class Phase:
         # TODO: 手札上限の処理
         if len(board.players[player_type].hand):
             print('手札の数が上限を超えています．伏せる手札を選んでください')
-            board.show_hand(player_type)
+            board.players[player_type].show_hand()
             index = list(map(int, input().split(' ')))
-            board.down(player_type, index)
+            board.players[player_type].down(index)
         # TODO: 傘の開閉判定
         # TODO: 切札の再起判定
         # TODO: 効果切れの判定

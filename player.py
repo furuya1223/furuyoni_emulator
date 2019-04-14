@@ -17,13 +17,13 @@ class PlayerType(Enum):
         Returns:
             PlayerType: 相手のPlayerType
         """
-        if self.value == PlayerType.FIRST:
+        if self == PlayerType.FIRST:
             return PlayerType.SECOND
         else:
             return PlayerType.FIRST
 
     def __str__(self):
-        if self.value == PlayerType.FIRST:
+        if self == PlayerType.FIRST:
             return '先攻'
         else:
             return '後攻'
@@ -186,10 +186,15 @@ class Player:
         山札の再構成を行う
         # TODO: 設置・虚魚の処理
         """
+        print(self.stock)
+        print(self.downed)
+        print(self.discarded)
         self.stock.push_bottom(self.downed.stack)
         self.downed.clear()
+        print(self.stock)
         self.stock.push_bottom(self.discarded.stack)
         self.discarded.clear()
         self.stock.shuffle()
+        print(self.stock)
         if not no_damage:
             Area.move_flowers(self.life, self.flare, 1)
