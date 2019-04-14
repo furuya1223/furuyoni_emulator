@@ -1,0 +1,64 @@
+#board-container {
+    display: grid;
+    grid-template-rows: 100px 100px 100px 100px 100px;
+    grid-template-columns: 500px 1fr;
+}
+
+#first-stock{
+    grid-row: 1;
+    grid-column: 2;
+}
+
+#first-downed{
+    grid-row: 2;
+    grid-column: 2;
+}
+
+#first-discarded{
+    grid-row: 3;
+    grid-column: 2;
+}
+
+#first-hand{
+    grid-row: 4 / 5;
+    grid-column: 2;
+}
+
+.canvas-wrapper {
+    grid-row: 1 / 6;
+    grid-column: 1;
+    position: relative;
+}
+.canvas-wrapper canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#first-hand{
+    position: relative;
+}
+
+#first-hand-canvas0{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#first-hand-canvas1{
+    position: absolute;
+    top: 0;
+    left: 50;
+}
+
+#first-hand-canvas2{
+    position: absolute;
+    top: 0;
+    left: 100;
+}
+
+#first-hand-canvas3{
+    position: absolute;
+    top: 0;
+    left: 150;
+}

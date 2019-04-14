@@ -1,0 +1,13 @@
+.idea/
+__pycache__/
+venv/
+
+# 実験用ファイル
+sandbox.py
+
+# Webアプリ関連
+brython/
+image/
+index.html
+index.cdd
+index.py
