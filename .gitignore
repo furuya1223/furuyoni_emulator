@@ -9,5 +9,8 @@ sandbox.py
 brython/
 image/
 index.html
-index.cdd
+index.css
 index.py
+
+# その他
+.DS_Store
