@@ -23,7 +23,7 @@ class BasicAction:
 
     @staticmethod
     def step_backward(board: Board, player_type: PlayerType):
-        if board.aura[player_type].removable() == 0 or board.distance.receivable() == 0:
+        if board.players[player_type].aura.removable() == 0 or board.distance.receivable() == 0:
             raise BasicActionException('後退できません！')
         Area.move_flowers(board.players[player_type].aura, board.distance, 1)
 
@@ -41,7 +41,7 @@ class BasicAction:
 
     @staticmethod
     def withdraw(board: Board):
-        if board.dust.removable() == 0:
+        if board.dust.removable() == 0 or board.distance.receivable() == 0:
             raise FlowerLackException('離脱できません！')
         if board.distance() > board.expert_distance:
             raise DistanceException('離脱できません！')
