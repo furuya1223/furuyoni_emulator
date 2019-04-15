@@ -90,8 +90,8 @@ CARD_LIST[Goddess.UTSURO_HAJIMARI][0][1].append(
         Effect(effect_type=EffectType.ACTION, content=ku_no_gaitou,
                summary='対応した攻撃は -2/+0 となる'),
         Effect(effect_type=EffectType.ACTION,
-               content=lambda b, p: Area.move_flowers(b.opponent_player().aura,
-                                                      b.dust, 2),
+               content=lambda b, p: Area.move_flowers(
+                   b.players[p.opponent()].aura, b.dust, 2),
                summary='相オーラ→ダスト(2)')
     ], counter=True, trump=True, cost=4,
                 image_filename='na_00_hajimari_a_s_3.png')])

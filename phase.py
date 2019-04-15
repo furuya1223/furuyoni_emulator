@@ -5,7 +5,7 @@ from exception import *
 from util import generator
 from constants import NORMAL_ACTION, FULL_POWER_ACTION, BASIC_ACTION,\
     USE_CARD, FINISH_TURN, CANCEL, PAY_VIGOR, DOWN_HAND, STEP_FORWARD,\
-    WITHDRAW, STEP_BACKWARD, PROTECT, CHARGE
+    WITHDRAW, STEP_BACKWARD, PROTECT, CHARGE, COMPLETED, CANCELED
 
 
 class Phase:
@@ -47,7 +47,6 @@ class Phase:
     def main_phase(board: Board):
         # メインフェイズ
         board.show_board()
-        player_type = board.turn_player_type
         while True:
             action_type = yield '[{}]: 標準行動, [{}]: 全力行動, [{}]: ターンを終了' \
                 .format(NORMAL_ACTION, FULL_POWER_ACTION, FINISH_TURN)
@@ -59,110 +58,138 @@ class Phase:
             raise StopIteration
         elif action_type == NORMAL_ACTION:
             # 標準行動
-            while True:
-                try:
-                    board.show_board()
-                    while True:
-                        normal_action_type = yield '[{}]: 基本行動, [{}]: カードの使用, [{}]: ターンを終了' \
-                            .format(BASIC_ACTION, USE_CARD, FINISH_TURN)
-                        if normal_action_type in [BASIC_ACTION, USE_CARD, FINISH_TURN]:
-                            break
-                        else:
-                            print('入力が不正です！')
-                    if normal_action_type == '2':
-                        break
-                    elif normal_action_type == '0':
-                        # 基本行動
-
-                        # 消費するリソースの種類の選択
-                        if board.players[player_type].vigor() == 0:
-                            if len(board.players[player_type].hand) == 0:
-                                raise BasicActionException('基本行動のリソースがありません！')
-                            # 集中力が0なので手札を伏せる
-                            resource_selection = DOWN_HAND
-                        elif len(board.players[player_type].hand) == 0:
-                            # 手札が0枚なので集中力を使用する
-                            resource_selection = PAY_VIGOR
-                        else:
-                            while True:
-                                resource_selection = yield '[{}]: 集中力を使用, [{}]: 手札を伏せる, [{}]: キャンセル' \
-                                    .format(PAY_VIGOR, DOWN_HAND, CANCEL)
-                                if resource_selection in [PAY_VIGOR, DOWN_HAND, CANCEL]:
-                                    break
-                                else:
-                                    print('入力が不正です！')
-                            if resource_selection == CANCEL:
-                                print('キャンセルします')
-                                continue
-
-                        # リソースの消費
-                        if resource_selection == PAY_VIGOR:
-                            # 集中力を1消費して基本行動
-                            board.players[player_type].vigor -= 1
-                        elif resource_selection == DOWN_HAND:
-                            # 手札を1枚伏せて基本行動
-                            print('伏せる手札を選択してください')
-                            index = yield board.turn_player().show_hand() + \
-                                ', [{}]: キャンセル'.format(CANCEL)
-                            if index == CANCEL:
-                                print('キャンセルします')
-                                continue
-                            index = int(index)
-                            # TODO: ここで伏せたら不正な行動を選んだときに伏せっぱなしになる
-                            board.players[player_type].down(index)
-
-                        # 行動の選択
-                        print('行動を選んでください')
-                        while True:
-                            basic_action_selection = yield '[{}]: {}, [{}]: 後退, [{}]: 纏い, [{}]: 宿し' \
-                                .format(STEP_FORWARD, ('離脱' if board.is_close() else '前進'),
-                                        STEP_BACKWARD, PROTECT, CHARGE)
-                            if basic_action_selection in [(WITHDRAW if board.is_close() else STEP_FORWARD),
-                                                          STEP_BACKWARD, PROTECT, CHARGE]:
-                                break
-                            else:
-                                print('入力が不正です！')
-
-                        # 行動の実行
-                        if basic_action_selection == (WITHDRAW if board.is_close() else STEP_FORWARD):
-                            if board.is_close():
-                                BasicAction.withdraw(board)
-                            else:
-                                BasicAction.step_forward(board, player_type)
-                        elif basic_action_selection == 1:
-                            BasicAction.step_backward(board, player_type)
-                        elif basic_action_selection == 2:
-                            BasicAction.protect(board, player_type)
-                        elif basic_action_selection == 3:
-                            BasicAction.charge(board, player_type)
-                        elif basic_action_selection == 4:
-                            BasicAction.withdraw(board)
-                    elif normal_action_type == '1':
-                        # カードの使用
-                        print('使用するカードを選択してください')
-                        index = yield \
-                            board.turn_player().show_hand() + '\n' + \
-                            board.players[player_type].show_unused_trumps()
-                        index = int(index)
-                        if index < 10:
-                            board.turn_player().hand.play(index, board,
-                                                          player_type)
-                            board.turn_player().discard(index)
-                        else:
-                            index -= 10
-                            # 切札の使用
-                            board.turn_player().trumps.play(index, board,
-                                                            player_type)
-                except (DistanceException, FlowerLackException,
-                        BasicActionException) as e:
-                    print(e)
-                    continue
-                except IndexError:
-                    print('番号の指定が不正です！')
-                    continue
+            yield from Phase.normal_action(board)
         elif action_type == FULL_POWER_ACTION:
             # 全力行動
             pass
+
+    @staticmethod
+    def normal_action(board):
+        while True:
+            try:
+                board.show_board()
+                while True:
+                    normal_action_type = yield '[{}]: 基本行動, ' \
+                                               '[{}]: カードの使用, ' \
+                                               '[{}]: ターンを終了' \
+                        .format(BASIC_ACTION, USE_CARD, FINISH_TURN)
+                    if normal_action_type in [BASIC_ACTION, USE_CARD,
+                                              FINISH_TURN]:
+                        break
+                    else:
+                        print('入力が不正です！')
+                if normal_action_type == FINISH_TURN:
+                    break
+                elif normal_action_type == BASIC_ACTION:
+                    # 基本行動
+                    result = yield from Phase.basic_action(board)
+                    if result == CANCELED:
+                        continue
+                elif normal_action_type == '1':
+                    # カードの使用
+                    yield from Phase.use_card(board)
+            except (DistanceException, FlowerLackException,
+                    BasicActionException) as e:
+                print(e)
+                continue
+            except IndexError:
+                print('番号の指定が不正です！')
+                continue
+
+    @staticmethod
+    def basic_action(board):
+        # 基本行動
+        # 消費するリソースの種類の選択
+        if board.turn_player().vigor() == 0:
+            if len(board.turn_player().hand) == 0:
+                raise BasicActionException('基本行動のリソースがありません！')
+            # 集中力が0なので手札を伏せる
+            resource_selection = DOWN_HAND
+        elif len(board.turn_player().hand) == 0:
+            # 手札が0枚なので集中力を使用する
+            resource_selection = PAY_VIGOR
+        else:
+            while True:
+                resource_selection = yield '[{}]: 集中力を使用, ' \
+                                           '[{}]: 手札を伏せる, ' \
+                                           '[{}]: キャンセル' \
+                    .format(PAY_VIGOR, DOWN_HAND, CANCEL)
+                if resource_selection in [PAY_VIGOR, DOWN_HAND,
+                                          CANCEL]:
+                    break
+                else:
+                    print('入力が不正です！')
+            if resource_selection == CANCEL:
+                print('キャンセルします')
+                return CANCELED
+
+        # リソースの消費
+        if resource_selection == PAY_VIGOR:
+            # 集中力を1消費して基本行動
+            board.turn_player().vigor -= 1
+        elif resource_selection == DOWN_HAND:
+            # 手札を1枚伏せて基本行動
+            print('伏せる手札を選択してください')
+            index = yield board.turn_player().show_hand() + \
+                ', [{}]: キャンセル'.format(CANCEL)
+            if index == CANCEL:
+                print('キャンセルします')
+                return CANCELED
+            index = int(index)
+            # TODO: ここで伏せたら不正な行動を選んだときに伏せっぱなしになる
+            board.turn_player().down(index)
+
+        # 行動の選択
+        print('行動を選んでください')
+        while True:
+            basic_action_selection = yield '[{}]: {}, [{}]: 後退, ' \
+                                           '[{}]: 纏い, [{}]: 宿し' \
+                .format(STEP_FORWARD,
+                        ('離脱' if board.is_close() else '前進'),
+                        STEP_BACKWARD, PROTECT, CHARGE)
+            if basic_action_selection in [
+                (WITHDRAW if board.is_close() else STEP_FORWARD),
+                    STEP_BACKWARD, PROTECT, CHARGE]:
+                break
+            else:
+                print('入力が不正です！')
+
+        # 行動の実行
+        if basic_action_selection == (
+                WITHDRAW if board.is_close() else STEP_FORWARD):
+            if board.is_close():
+                BasicAction.withdraw(board)
+            else:
+                BasicAction.step_forward(board,
+                                         board.turn_player_type)
+        elif basic_action_selection == 1:
+            BasicAction.step_backward(board,
+                                      board.turn_player_type)
+        elif basic_action_selection == 2:
+            BasicAction.protect(board, board.turn_player_type)
+        elif basic_action_selection == 3:
+            BasicAction.charge(board, board.turn_player_type)
+        elif basic_action_selection == 4:
+            BasicAction.withdraw(board)
+        return COMPLETED
+
+    @staticmethod
+    def use_card(board):
+        # カードの使用
+        print('使用するカードを選択してください')
+        index = yield \
+            board.turn_player().show_hand() + '\n' + \
+            board.turn_player().show_unused_trumps()
+        index = int(index)
+        if index < 10:
+            board.turn_player().hand.play(index, board,
+                                          board.turn_player_type)
+            board.turn_player().discard(index)
+        else:
+            index -= 10
+            # 切札の使用
+            board.turn_player().trumps.play(index, board,
+                                            board.turn_player_type)
 
     @staticmethod
     def closing_phase(board):

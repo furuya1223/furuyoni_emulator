@@ -14,8 +14,8 @@ class Attack:
         self.inevitable = inevitable            # 不可避
 
     def __str__(self):
-        string = '{}{}/{}'.format(self.proper_distance, self.aura_damage,
-                                  self.life_damage)
+        string = '{} {}/{}'.format(self.proper_distance, self.aura_damage,
+                                   self.life_damage)
         if self.uncounterable:
             string += '(対応不可)'
         if self.inevitable:
@@ -28,7 +28,7 @@ class Attack:
         print(self)
         if not self.uncounterable:
             # 対応
-            board.players[player_type.opponent()].counter(board)
+            board.opponent_player().counter(board)
             # TODO: 対応後の諸々の判定（間合や決死などの条件の再確認）
             # TODO: 不可避の処理
         attack = board.attacks.pop()

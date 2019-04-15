@@ -104,7 +104,7 @@ class Player:
                 select_aura = False
             else:
                 # ダメージの受け方を尋ねる
-                receive = yield '焦燥ダメージをどちらで受けますか？\n' + \
+                receive = yield '焦燥ダメージをどちらで受けますか？\n'\
                                 '[0]: オーラ, [1]: ライフ'
                 select_aura = True if receive == '0' else False
             if select_aura:
@@ -133,7 +133,7 @@ class Player:
         self.discarded.push_bottom(self.hand.pick(index))
 
     def __str__(self):
-        string = '{} オーラ: {}, ライフ: {}, フレア: {}, 集中力: {}, ' + \
+        string = '{} オーラ: {}, ライフ: {}, フレア: {}, 集中力: {}, '\
                  '伏せ札: {}枚, 山札: {}枚, 手札: {}枚, 集中力: {}'\
             .format(self.type,
                     self.aura,
@@ -175,7 +175,8 @@ class Player:
         print()
         for i, trump in counter_trumps:
             print('[1{}]: {} '.format(i, trump), end='')
-        receive = yield '対応する場合はカードの番号を入力してください\n' + \
+
+        receive = yield '対応する場合はカードの番号を入力してください\n'\
                         '対応しない場合は-1を入力してください'
         receive = int(receive)
         if receive == -1:

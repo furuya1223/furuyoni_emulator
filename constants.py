@@ -25,6 +25,10 @@ STEP_BACKWARD = '1'
 PROTECT = '2'
 CHARGE = '3'
 
+# サブジェネレータでの結果
+COMPLETED = 0
+CANCELED = 1
+
 # ダメージの受け方
 SELECT_AURA = '0'
 SELECT_LIFE = '1'
