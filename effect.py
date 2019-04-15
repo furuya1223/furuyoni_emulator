@@ -14,7 +14,8 @@ class EffectType(Enum):
 
 
 class Effect:
-    def __init__(self, effect_type, content, summary, arbitrariness=False, condition=None):
+    def __init__(self, effect_type, content, summary,
+                 arbitrariness=False, condition=None):
         self.effect_type = effect_type
         self.arbitrary = arbitrariness
         self.content = content

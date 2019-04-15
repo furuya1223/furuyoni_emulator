@@ -16,7 +16,8 @@ class CardType(Enum):
 
 class Card:
     def __init__(self, goddess, name, card_type, effects=None,
-                 full_power=False, counter=False, trump=False, cost=None, image_filename=''):
+                 full_power=False, counter=False, trump=False, cost=None,
+                 image_filename=''):
         self.goddess = goddess  # メガミ種別
         self.name = name
         self.card_type = card_type
@@ -42,15 +43,19 @@ class Card:
             # TODO: 灰滅などのコスト変更効果
             # TODO: 責務を移動
             if board.players[player_type].flare.flowers < cost:
-                print('フレアが足りません！（{} < {}）'.format(board.players[player_type].flare.flowers, cost))
+                print('フレアが足りません！（{} < {}）'
+                      .format(board.players[player_type].flare.flowers, cost))
                 raise FlowerLackException
 
 
 class AttackCard(Card):
     def __init__(self, goddess, name, attack,
-                 full_power=False, counter=False, effects=None, trump=False, cost=None, image_filename=''):
-        super().__init__(goddess=goddess, name=name, card_type=CardType.Attack, effects=effects,
-                         full_power=full_power, counter=counter, trump=trump, cost=cost, image_filename=image_filename)
+                 full_power=False, counter=False, effects=None, trump=False,
+                 cost=None, image_filename=''):
+        super().__init__(goddess=goddess, name=name, card_type=CardType.Attack,
+                         effects=effects, full_power=full_power,
+                         counter=counter, trump=trump, cost=cost,
+                         image_filename=image_filename)
         self.base_attack: Attack = attack
 
     def play(self, board, player, counter=False, **kwargs):
@@ -73,10 +78,12 @@ class AttackCard(Card):
 
 
 class ActionCard(Card):
-    def __init__(self, goddess, name, full_power=False, counter=False, effects=None, trump=False, cost=None,
-                 image_filename=''):
-        super().__init__(goddess=goddess, name=name, card_type=CardType.Action, effects=effects,
-                         full_power=full_power, counter=counter, trump=trump, cost=cost, image_filename=image_filename)
+    def __init__(self, goddess, name, full_power=False, counter=False,
+                 effects=None, trump=False, cost=None, image_filename=''):
+        super().__init__(goddess=goddess, name=name, card_type=CardType.Action,
+                         effects=effects, full_power=full_power,
+                         counter=counter, trump=trump, cost=cost,
+                         image_filename=image_filename)
 
     def play(self, board, player, counter=False, **kwargs):
         self.flare_check(board, player)
@@ -86,9 +93,12 @@ class ActionCard(Card):
 
 class GrantCard(Card):
     def __init__(self, goddess, name, payment,
-                 full_power=False, counter=False, effects=None, trump=False, cost=None):
-        super().__init__(goddess=goddess, name=name, card_type=CardType.Grant, effects=effects,
-                         full_power=full_power, counter=counter, trump=trump, cost=cost)
+                 full_power=False, counter=False, effects=None, trump=False,
+                 cost=None, image_filename=''):
+        super().__init__(goddess=goddess, name=name, card_type=CardType.Grant,
+                         effects=effects, full_power=full_power,
+                         counter=counter, trump=trump, cost=cost,
+                         image_filename=image_filename)
         self.payment = payment
 
     def play(self, board, player, counter=False, **kwargs):

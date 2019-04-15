@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from enum import Enum, auto
-
-INFINITY = 1000
+from constants import DISTANCE_DEFAULT, AURA_DEFAULT, LIFE_DEFAULT, \
+    FLARE_DEFAULT, DUST_DEFAULT, INFINITY
 
 
 class AreaType(Enum):
@@ -75,7 +75,7 @@ class Area(metaclass=ABCMeta):
 
 class Distance(Area):
     def __init__(self):
-        super().__init__(10)
+        super().__init__(DISTANCE_DEFAULT)
         self.increment_token = 0
         self.decrement_token = 0
 
@@ -102,7 +102,7 @@ class Distance(Area):
 
 class Aura(Area):
     def __init__(self):
-        super().__init__(3)
+        super().__init__(AURA_DEFAULT)
 
     def removable(self):
         return self.flowers
@@ -113,7 +113,7 @@ class Aura(Area):
 
 class Life(Area):
     def __init__(self):
-        super().__init__(10)
+        super().__init__(LIFE_DEFAULT)
 
     def removable(self):
         return self.flowers
@@ -124,7 +124,7 @@ class Life(Area):
 
 class Flare(Area):
     def __init__(self):
-        super().__init__(0)
+        super().__init__(FLARE_DEFAULT)
 
     def removable(self):
         return self.flowers
@@ -135,7 +135,7 @@ class Flare(Area):
 
 class Dust(Area):
     def __init__(self):
-        super().__init__(0)
+        super().__init__(DUST_DEFAULT)
 
     def removable(self):
         return self.flowers

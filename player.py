@@ -70,7 +70,8 @@ class Vigor:
 class Player:
     """
     プレイヤーに紐づく情報を扱うクラス
-    ライフ、オーラ、フレア、手札、山札、伏せ札、捨て札、切り札、展開中の付与札、集中力、傘など、
+    ライフ、オーラ、フレア、手札、山札、伏せ札、捨て札、切り札、
+    展開中の付与札、集中力、傘など、
     """
     def __init__(self, player_type: PlayerType, deck: Deck):
         self.life = Life()
@@ -103,7 +104,8 @@ class Player:
                 select_aura = False
             else:
                 # ダメージの受け方を尋ねる
-                receive = yield '焦燥ダメージをどちらで受けますか？\n[0]: オーラ, [1]: ライフ'
+                receive = yield '焦燥ダメージをどちらで受けますか？\n' + \
+                                '[0]: オーラ, [1]: ライフ'
                 select_aura = True if receive == '0' else False
             if select_aura:
                 Area.move_flowers(AreaType.AURA, AreaType.DUST, 1)
@@ -131,7 +133,8 @@ class Player:
         self.discarded.push_bottom(self.hand.pick(index))
 
     def __str__(self):
-        string = '{} オーラ: {}, ライフ: {}, フレア: {}, 集中力: {}, 伏せ札: {}枚, 山札: {}枚, 手札: {}枚, 集中力: {}'\
+        string = '{} オーラ: {}, ライフ: {}, フレア: {}, 集中力: {}, ' + \
+                 '伏せ札: {}枚, 山札: {}枚, 手札: {}枚, 集中力: {}'\
             .format(self.type,
                     self.aura,
                     self.life,
@@ -152,8 +155,11 @@ class Player:
         return self.trumps.show_unused()
 
     def get_counter(self):
-        counter_normal_cards = [(i, card) for i, card in enumerate(self.hand) if card.counter]
-        counter_trumps = [(i, trump) for i, trump in enumerate(self.trumps) if not trump.used and trump.card.counter]
+        counter_normal_cards = \
+            [(i, card) for i, card in enumerate(self.hand) if card.counter]
+        counter_trumps = \
+            [(i, trump) for i, trump in enumerate(self.trumps)
+             if not trump.used and trump.card.counter]
         return counter_normal_cards, counter_trumps
 
     @generator
@@ -169,7 +175,8 @@ class Player:
         print()
         for i, trump in counter_trumps:
             print('[1{}]: {} '.format(i, trump), end='')
-        receive = yield '対応する場合はカードの番号を入力してください\n対応しない場合は-1を入力してください'
+        receive = yield '対応する場合はカードの番号を入力してください\n' + \
+                        '対応しない場合は-1を入力してください'
         receive = int(receive)
         if receive == -1:
             return
