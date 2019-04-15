@@ -35,36 +35,36 @@ class Vigor:
     """
     def __init__(self, player_type):
         if player_type == PlayerType.FIRST:
-            self.value = 0
+            self._value = 0
         else:
-            self.value = 1
-        self.cowering = False  # 畏縮状態
+            self._value = 1
+        self._cowering = False  # 畏縮状態
 
     def cower(self):
-        self.cowering = True
+        self._cowering = True
 
     def recover(self):
-        if self.cowering:
-            self.cowering = False
+        if self._cowering:
+            self._cowering = False
         else:
-            self.value = min(2, self.value + 1)
+            self._value = min(2, self._value + 1)
 
     def __iadd__(self, other):
-        self.value = min(2, self.value + other)
+        self._value = min(2, self._value + other)
         return self
 
     def __isub__(self, other):
-        self.value = max(0, self.value - other)
+        self._value = max(0, self._value - other)
         return self
 
     def __str__(self):
-        if self.cowering:
-            return '{}（畏縮）'.format(self.value)
+        if self._cowering:
+            return '{}（畏縮）'.format(self._value)
         else:
-            return str(self.value)
+            return str(self._value)
 
     def __call__(self, *args, **kwargs):
-        return self.value
+        return self._value
 
 
 class Player:
