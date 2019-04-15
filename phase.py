@@ -2,6 +2,7 @@ from board import Board
 from player import PlayerType, Player
 from basic_action import BasicAction
 from exception import *
+from util import generator
 
 
 class Phase:
@@ -39,28 +40,30 @@ class Phase:
         board.players[player_type].reconstruction()
 
     @staticmethod
+    @generator
     def main_phase(board: Board):
         # メインフェイズ
         board.show_board()
         player_type = board.turn_player
-        print('[0]: 標準行動, [1]: 全力行動')
-        if input() == '0':
+        action_type = yield '[0]: 標準行動, [1]: 全力行動, [2]: ターンを終了'
+        if action_type == '2':
+            raise StopIteration
+        elif action_type == '0':
             # 標準行動
             while True:
                 try:
                     board.show_board()
-                    print('ターンを終了しますか？[y/n]')
-                    if input() == 'y':
+                    normal_action_type = yield '[0]: 基本行動, [1]: カードの使用, [2]: ターンを終了'
+                    if normal_action_type == '2':
                         break
-                    print('[0]: 基本行動, [1]: カードの使用')
-                    if input() == '0':
+                    elif normal_action_type == '0':
                         # 基本行動
                         if board.players[player_type].vigor() == 0:
                             if len(board.players[player_type].hand) == 0:
                                 raise BasicActionException('基本行動のリソースがありません！')
                             # 集中力が0なので手札を伏せる
                             select_vigor = False
-                        elif len(board.players[player_type]) == 0:
+                        elif len(board.players[player_type].hand) == 0:
                             # 手札が0枚なので集中力を使用する
                             select_vigor = True
                         else:
@@ -72,8 +75,8 @@ class Phase:
                         else:
                             # 手札を1枚伏せて基本行動
                             print('伏せる手札を選択してください')
-                            board.players[player_type].show_hand()
-                            index = int(input())
+                            index = yield board.players[player_type].show_hand()
+                            index = int(index)
                             # TODO: ここで伏せたら不正な行動を選んだときに伏せっぱなしになる
                             board.players[player_type].down(index)
                         print('行動を選んでください')
@@ -90,12 +93,13 @@ class Phase:
                             BasicAction.charge(board, player_type)
                         elif selection == 4:
                             BasicAction.withdraw(board)
-                    else:
+                    elif normal_action_type == '1':
                         # カードの使用
                         print('使用するカードを選択してください')
-                        board.players[player_type].show_hand()
-                        board.players[player_type].show_unused_trumps()
-                        index = int(input())
+                        index = yield \
+                            board.players[player_type].show_hand() + '\n' + \
+                            board.players[player_type].show_unused_trumps()
+                        index = int(index)
                         if index < 10:
                             board.players[player_type].hand.play(index, board, player_type)
                             board.players[player_type].discard(index)
@@ -109,8 +113,7 @@ class Phase:
                 except IndexError:
                     print('番号の指定が不正です！')
                     continue
-
-        else:
+        elif action_type == '1':
             # 全力行動
             pass
 
@@ -119,7 +122,7 @@ class Phase:
         # 終了フェイズ
         player_type = board.turn_player
         # TODO: 手札上限の処理
-        if len(board.players[player_type].hand):
+        if len(board.players[player_type].hand) > 2:
             print('手札の数が上限を超えています．伏せる手札を選んでください')
             board.players[player_type].show_hand()
             index = list(map(int, input().split(' ')))

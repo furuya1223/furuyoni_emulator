@@ -26,7 +26,7 @@ class Moderator:
         # 決闘開始
         while True:
             self.turn += 1
-            if self.turn >= 2:
+            if self.turn >= 3:
                 Phase.opening_phase(self.board)
             Phase.main_phase(self.board)
             Phase.closing_phase(self.board)

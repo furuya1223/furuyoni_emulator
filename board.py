@@ -48,7 +48,10 @@ class Board:
             print(self.players[player_type])
         print('ダスト: {}'.format(self.dust.flowers))
         print('手札: {}'.format(self.players[self.turn_player].hand))
+        print('切札: {}'.format(self.players[self.turn_player].trumps))
+        print('手番: {}'.format(self.turn_player))
         print('========================')
+        counter_normal_cards, counter_trumps = self.players[self.turn_player].get_counter()
 
     def show_unused_trump(self, player_type):
         # 未使用の切札を表示

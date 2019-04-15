@@ -146,16 +146,17 @@ class Player:
         return string
 
     def show_hand(self):
-        print(self.hand.show())
+        return self.hand.show()
 
     def show_unused_trumps(self):
-        print(self.trumps.show_unused())
+        return self.trumps.show_unused()
 
     def get_counter(self):
         counter_normal_cards = [(i, card) for i, card in enumerate(self.hand) if card.counter]
         counter_trumps = [(i, trump) for i, trump in enumerate(self.trumps) if not trump.used and trump.card.counter]
         return counter_normal_cards, counter_trumps
 
+    @generator
     def counter(self, board):
         # 対応可能か判定
         counter_normal_cards, counter_trumps = self.get_counter()
@@ -186,15 +187,10 @@ class Player:
         山札の再構成を行う
         # TODO: 設置・虚魚の処理
         """
-        print(self.stock)
-        print(self.downed)
-        print(self.discarded)
         self.stock.push_bottom(self.downed.stack)
         self.downed.clear()
-        print(self.stock)
         self.stock.push_bottom(self.discarded.stack)
         self.discarded.clear()
         self.stock.shuffle()
-        print(self.stock)
         if not no_damage:
             Area.move_flowers(self.life, self.flare, 1)

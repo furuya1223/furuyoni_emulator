@@ -42,7 +42,7 @@ class Cards:
         return len(self.stack)
 
     def __str__(self):
-        return ', '.join([str(card) for card in self.stack])
+        return ', '.join(map(str, self.stack))
 
     def clear(self):
         return self.stack.clear()
@@ -96,7 +96,7 @@ class Trumps:
         return len(self.trumps)
 
     def __str__(self):
-        return ', '.join([str(card) for card in self.trumps])
+        return ', '.join(map(str, self.trumps))
 
     def play(self, index, board, player_type, counter=False):
         self.trumps[index].play(board, player_type, counter=counter)

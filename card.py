@@ -115,7 +115,7 @@ class Trump:
 
     def __str__(self):
         if self.used:
-            return str(self.card + '(使用済)')
+            return str(self.card) + '(使用済)'
         else:
             return str(self.card)
 

@@ -75,7 +75,7 @@ class Area(metaclass=ABCMeta):
 
 class Distance(Area):
     def __init__(self):
-        super().__init__(10)
+        super().__init__(3)
         self.increment_token = 0
         self.decrement_token = 0
 
