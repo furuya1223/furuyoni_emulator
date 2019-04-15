@@ -9,8 +9,7 @@ from collections import deque
 class Board:
     """
     局面を表すクラス
-    もっと役割を外部に投げるべきな気がする
-    
+
     Attributes:
         distance (Distance): 間合エリア
         dust (Dust): ダスト
@@ -32,9 +31,6 @@ class Board:
         self.attacks = deque()
         self.players = {PlayerType.FIRST: Player(PlayerType.FIRST, first_deck),
                         PlayerType.SECOND: Player(PlayerType.SECOND, second_deck)}
-
-    def distance(self):
-        return self.distance()
 
     def show_board(self):
         """

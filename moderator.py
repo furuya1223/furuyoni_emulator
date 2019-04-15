@@ -30,6 +30,3 @@ class Moderator:
                 Phase.opening_phase(self.board)
             Phase.main_phase(self.board)
             Phase.closing_phase(self.board)
-
-    def do_basic_action(self, action_type, use_vigor, down_card_index=None):
-        pass
