@@ -36,3 +36,4 @@ class Attack:
             damage = min(board.players[player_type.opponent()].life(), self.life_damage)
             Area.move_flowers(board.players[player_type.opponent()].life,
                               board.players[player_type.opponent()].flare, damage)
+        board.attacks.pop()
