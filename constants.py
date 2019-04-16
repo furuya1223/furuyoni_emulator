@@ -5,6 +5,14 @@ LIFE_DEFAULT = 10
 FLARE_DEFAULT = 10
 DUST_DEFAULT = 0
 
+# 集中力の最大値と最小値
+VIGOR_MAX = 2
+VIGOR_MIN = 0
+
+# 集中力の初期値
+VIGOR_DEFAULT_FIRST = 0
+VIGOR_DEFAULT_SECOND = 1
+
 # 質問に対する選択
 YES = 'y'
 NO = 'n'

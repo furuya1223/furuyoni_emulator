@@ -14,8 +14,10 @@ class Attack:
         self.inevitable = inevitable            # 不可避
 
     def __str__(self):
-        string = '{} {}/{}'.format(self.proper_distance, self.aura_damage,
-                                   self.life_damage)
+        string = '{} {}/{}'.format(
+            self.proper_distance,
+            self.aura_damage if self.aura_damage is not None else '-',
+            self.life_damage if self.life_damage is not None else '-')
         if self.uncounterable:
             string += '(対応不可)'
         if self.inevitable:

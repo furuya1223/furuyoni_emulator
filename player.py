@@ -3,6 +3,8 @@ from cards import Cards, Hand, Trumps, Grants
 from deck import Deck
 from enum import Enum, auto
 from util import generator
+from constants import VIGOR_MAX, VIGOR_MIN, VIGOR_DEFAULT_FIRST,\
+    VIGOR_DEFAULT_SECOND
 
 
 class PlayerType(Enum):
@@ -14,8 +16,10 @@ class PlayerType(Enum):
 
     def opponent(self):
         """
-        Returns:
-            PlayerType: 相手のPlayerType
+        相手のタイプを返す
+        Returns
+        -------
+        相手のプレイヤータイプ
         """
         if self == PlayerType.FIRST:
             return PlayerType.SECOND
@@ -32,29 +36,70 @@ class PlayerType(Enum):
 class Vigor:
     """
     集中力
+
+    Attributes
+    ----------
+    _value: int
+        集中力の値
+    _cowering: bool
+        畏縮状態かどうか
     """
     def __init__(self, player_type):
         if player_type == PlayerType.FIRST:
-            self._value = 0
+            self._value = VIGOR_DEFAULT_FIRST
         else:
-            self._value = 1
+            self._value = VIGOR_DEFAULT_SECOND
         self._cowering = False  # 畏縮状態
 
     def cower(self):
+        """
+        畏縮させる
+        """
         self._cowering = True
 
     def recover(self):
+        """
+        集中力を1段階回復する
+        """
         if self._cowering:
             self._cowering = False
         else:
-            self._value = min(2, self._value + 1)
+            self._value = min(VIGOR_MAX, self._value + 1)
 
     def __iadd__(self, other):
-        self._value = min(2, self._value + other)
+        """
+        集中力を増やす加算代入演算子
+        最大値を超えないようにする
+
+        Parameters
+        ----------
+        other: int
+            増やす量
+
+        Returns
+        -------
+        self: Vigor
+            増やした後の自身
+        """
+        self._value = min(VIGOR_MAX, self._value + other)
         return self
 
     def __isub__(self, other):
-        self._value = max(0, self._value - other)
+        """
+        集中力を減らす減算代入演算子
+        最小値を下回らないようにする
+
+        Parameters
+        ----------
+        other: int
+            減らす量
+
+        Returns
+        -------
+        self: Vigor
+            減らした後の自身
+        """
+        self._value = max(VIGOR_MIN, self._value - other)
         return self
 
     def __str__(self):
@@ -64,6 +109,12 @@ class Vigor:
             return str(self._value)
 
     def __call__(self, *args, **kwargs):
+        """
+        集中力の値を返す
+        Returns
+        -------
+        集中力の値
+        """
         return self._value
 
 
@@ -71,7 +122,34 @@ class Player:
     """
     プレイヤーに紐づく情報を扱うクラス
     ライフ、オーラ、フレア、手札、山札、伏せ札、捨て札、切り札、
-    展開中の付与札、集中力、傘など、
+    展開中の付与札、集中力、傘など
+
+    Attributes
+    ----------
+    life: Life
+        ライフ
+    aura: Aura
+        オーラ
+    flare: Flare
+        フレア
+    type: PlayerType
+        プレイヤータイプ（先攻か後攻か）
+    vigor: Vigor
+        集中力
+    hand: Hand
+        手札
+    trumps: Trumps
+        切札
+    stock: Cards
+        山札
+    downed: Cards
+        伏せ札
+    discarded: Cards
+        捨て札
+    grants: Grants
+        付与札
+    extra_cards: Cards
+        追加札
     """
     def __init__(self, player_type: PlayerType, deck: Deck):
         self.life = Life()
@@ -97,6 +175,10 @@ class Player:
 
     @generator
     def draw_single(self):
+        """
+        山札からカードを1枚ドローする
+        山札が無ければ焦燥ダメージを受ける
+        """
         if len(self.stock) == 0:
             # 焦燥ダメージ
             if self.aura == 0:
@@ -115,20 +197,36 @@ class Player:
             self.hand.push_bottom(self.stock.pop())
 
     def draw(self, number):
+        """
+        山札から何枚かカードをドローする
+
+        Parameters
+        ----------
+        number: int
+            ドローする枚数
+        """
         for _ in range(number):
             self.draw_single()
 
     def down(self, index):
         """
         手札を伏せる
-        :param index: 伏せる手札の添字
+
+        Parameters
+        ----------
+        index: int
+            伏せる手札の添字
         """
         self.downed.push_bottom(self.hand.pick(index))
 
     def discard(self, index):
         """
         手札を捨てる
-        :param index: 伏せる手札の添字
+
+        Parameters
+        ----------
+        index: int
+            捨てる手札の添字
         """
         self.discarded.push_bottom(self.hand.pick(index))
 
@@ -181,6 +279,14 @@ class Player:
 
     @generator
     def counter(self, board):
+        """
+        対応を行うかどうかを尋ね、適切に処理する
+
+        Parameters
+        ----------
+        board: Board
+            現在の局面
+        """
         # 対応可能か判定
         counter_normal_cards, counter_trumps = self.get_counter()
         if len(counter_normal_cards) == 0 and len(counter_trumps) == 0:
@@ -210,7 +316,12 @@ class Player:
     def reconstruction(self, no_damage=False):
         """
         山札の再構成を行う
-        # TODO: 設置・虚魚の処理
+        TODO: 設置・虚魚の処理
+
+        Parameters
+        ----------
+        no_damage: bool, default False
+            ダメージを受けない場合にTrue
         """
         self.stock.push_bottom(self.downed.stack)
         self.downed.clear()
