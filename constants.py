@@ -5,6 +5,10 @@ LIFE_DEFAULT = 10
 FLARE_DEFAULT = 10
 DUST_DEFAULT = 0
 
+# 質問に対する選択
+YES = 'y'
+NO = 'n'
+
 # 行動の選択肢
 NORMAL_ACTION = '0'
 FULL_POWER_ACTION = '1'

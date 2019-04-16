@@ -1,4 +1,4 @@
-from card import Trump, Grant, CardSubType
+from card import Trump, Grant
 from collections import deque
 from collections.abc import Iterable
 from random import shuffle

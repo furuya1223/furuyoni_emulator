@@ -172,7 +172,8 @@ class Player:
 
     def get_counter(self):
         counter_normal_cards = \
-            [(i, card) for i, card in enumerate(self.hand) if card.is_counter()]
+            [(i, card) for i, card in enumerate(self.hand)
+             if card.is_counter()]
         counter_trumps = \
             [(i, trump) for i, trump in enumerate(self.trumps)
              if not trump.used and trump.card.is_counter()]

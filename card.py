@@ -76,8 +76,8 @@ class AttackCard(Card):
                  sub_type=CardSubType.NONE, effects=None, trump=False,
                  cost=None, image_filename=''):
         super().__init__(goddess=goddess, name=name, card_type=CardType.ATTACK,
-                         effects=effects, sub_type=sub_type, trump=trump, cost=cost,
-                         image_filename=image_filename)
+                         effects=effects, sub_type=sub_type, trump=trump,
+                         cost=cost, image_filename=image_filename)
         self.base_attack: Attack = attack
 
     def play(self, board, player, counter=False, **kwargs):

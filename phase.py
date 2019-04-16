@@ -5,8 +5,7 @@ from exception import *
 from util import generator
 from constants import NORMAL_ACTION, FULL_POWER_ACTION, BASIC_ACTION,\
     USE_CARD, FINISH_TURN, CANCEL, PAY_VIGOR, DOWN_HAND, STEP_FORWARD,\
-    WITHDRAW, STEP_BACKWARD, PROTECT, CHARGE, COMPLETED, CANCELED
-from card import CardSubType
+    WITHDRAW, STEP_BACKWARD, PROTECT, CHARGE, COMPLETED, CANCELED, YES, NO
 
 
 class Phase:
@@ -31,8 +30,13 @@ class Phase:
         # TODO: 付与札の結晶の移動と破棄時効果の解決
 
         # 再構成するかどうか聞く
-        print('山札の再構成を行いますか？[y/n]')
-        if input() == 'y':
+        while True:
+            receive = yield '山札の再構成を行いますか？[{}/{}]'.format(YES, NO)
+            if receive in [YES, NO]:
+                break
+            else:
+                print('入力が不正です！')
+        if receive == YES:
             Phase.reconstruction(board, player_type)
 
         # 2枚ドロー

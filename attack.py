@@ -28,7 +28,7 @@ class Attack:
         print(self)
         if not self.uncounterable:
             # 対応
-            board.opponent_player().counter(board)
+            board.players[player_type.opponent()].counter(board)
             # TODO: 対応後の諸々の判定（間合や決死などの条件の再確認）
             # TODO: 不可避の処理
         attack = board.attacks.pop()
@@ -43,7 +43,8 @@ class Attack:
             while True:
                 print('ダメージ {}/{} をどちらで受けますか？'
                       .format(attack.aura_damage, attack.life_damage))
-                damage_select = yield '[0]: オーラ, [1]: ライフ'
+                damage_select = yield '[{}]: オーラ, [{}]: ライフ'\
+                    .format(SELECT_AURA, SELECT_LIFE)
                 if damage_select == SELECT_AURA:
                     select_aura = True
                     break
@@ -56,8 +57,10 @@ class Attack:
             # オーラダメージを選択
             # TODO: 「無音壁」展開中かどうか確認し、
             #  展開中ならダメージの受け方を尋ねる
-            damage = min(board.opponent_player().aura(), attack.aura_damage)
-            Area.move_flowers(board.opponent_player().aura, board.dust, damage)
+            damage = min(board.players[player_type.opponent()].aura(),
+                         attack.aura_damage)
+            Area.move_flowers(board.players[player_type.opponent()].aura,
+                              board.dust, damage)
         else:
             # ライフダメージを選択
             damage = min(board.opponent_player().life(), attack.life_damage)

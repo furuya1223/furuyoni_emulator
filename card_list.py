@@ -122,4 +122,4 @@ CARD_LIST[Goddess.YURINA][0][0].append([ActionCard(1, '足捌き', effects=[
 
 # 月影落
 CARD_LIST[Goddess.YURINA][0][1].append(
-    [AttackCard(1, '月影落',Attack([3, 4], 4, 4), trump=True, cost=7)])
+    [AttackCard(1, '月影落', Attack([3, 4], 4, 4), trump=True, cost=7)])
