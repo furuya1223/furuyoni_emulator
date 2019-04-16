@@ -6,6 +6,7 @@ from util import generator
 from constants import NORMAL_ACTION, FULL_POWER_ACTION, BASIC_ACTION,\
     USE_CARD, FINISH_TURN, CANCEL, PAY_VIGOR, DOWN_HAND, STEP_FORWARD,\
     WITHDRAW, STEP_BACKWARD, PROTECT, CHARGE, COMPLETED, CANCELED
+from card import CardSubType
 
 
 class Phase:
@@ -47,13 +48,24 @@ class Phase:
     def main_phase(board: Board):
         # メインフェイズ
         board.show_board()
-        while True:
-            action_type = yield '[{}]: 標準行動, [{}]: 全力行動, [{}]: ターンを終了' \
-                .format(NORMAL_ACTION, FULL_POWER_ACTION, FINISH_TURN)
-            if action_type in [NORMAL_ACTION, FULL_POWER_ACTION, FINISH_TURN]:
-                break
-            else:
-                print('入力が不正です！')
+        if board.turn_player().exist_full_power():
+            while True:
+                action_type = yield '[{}]: 標準行動, [{}]: 全力行動, ' \
+                                    '[{}]: ターンを終了' \
+                    .format(NORMAL_ACTION, FULL_POWER_ACTION, FINISH_TURN)
+                if action_type in [NORMAL_ACTION, FULL_POWER_ACTION,
+                                   FINISH_TURN]:
+                    break
+                else:
+                    print('入力が不正です！')
+        else:
+            while True:
+                action_type = yield '[{}]: 標準行動, [{}]: ターンを終了' \
+                    .format(NORMAL_ACTION, FINISH_TURN)
+                if action_type in [NORMAL_ACTION, FINISH_TURN]:
+                    break
+                else:
+                    print('入力が不正です！')
         if action_type == FINISH_TURN:
             raise StopIteration
         elif action_type == NORMAL_ACTION:
@@ -61,7 +73,7 @@ class Phase:
             yield from Phase.normal_action(board)
         elif action_type == FULL_POWER_ACTION:
             # 全力行動
-            pass
+            yield from Phase.use_full_power_card(board)
 
     @staticmethod
     def normal_action(board):
@@ -175,11 +187,29 @@ class Phase:
 
     @staticmethod
     def use_card(board):
-        # カードの使用
+        # 標準行動でのカードの使用
         print('使用するカードを選択してください')
         index = yield \
-            board.turn_player().show_hand() + '\n' + \
-            board.turn_player().show_unused_trumps()
+            board.turn_player().show_hand_not_full_power() + '\n' + \
+            board.turn_player().show_unused_trumps_not_full_power()
+        index = int(index)
+        if index < 10:
+            board.turn_player().hand.play(index, board,
+                                          board.turn_player_type)
+            board.turn_player().discard(index)
+        else:
+            index -= 10
+            # 切札の使用
+            board.turn_player().trumps.play(index, board,
+                                            board.turn_player_type)
+
+    @staticmethod
+    def use_full_power_card(board):
+        # 全力札の使用
+        print('使用する全力札を選択してください')
+        index = yield \
+            board.turn_player().show_hand_full_power() + '\n' + \
+            board.turn_player().show_unused_trumps_full_power()
         index = int(index)
         if index < 10:
             board.turn_player().hand.play(index, board,
@@ -194,14 +224,13 @@ class Phase:
     @staticmethod
     def closing_phase(board):
         # 終了フェイズ
-        player_type = board.turn_player
         # TODO: 手札上限の処理
-        if len(board.players[player_type].hand) > 2:
+        if len(board.turn_player().hand) > 2:
             print('手札の数が上限を超えています．伏せる手札を選んでください')
-            board.players[player_type].show_hand()
+            board.turn_player().show_hand()
             index = list(map(int, input().split(' ')))
-            board.players[player_type].down(index)
+            board.turn_player().down(index)
         # TODO: 傘の開閉判定
         # TODO: 切札の再起判定
         # TODO: 効果切れの判定（"このターンの終わりまで"のもの）
-        board.turn_player = player_type.opponent()
+        board.change_turn_player()

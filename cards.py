@@ -1,4 +1,4 @@
-from card import Trump, Grant
+from card import Trump, Grant, CardSubType
 from collections import deque
 from collections.abc import Iterable
 from random import shuffle
@@ -72,10 +72,21 @@ class Hand(Cards):
             return cards
 
     def show(self):
-        string = ''
-        for i, card in enumerate(self.stack):
-            string += '[{}]{}, '.format(i, card)
-        return string[:-2]
+        return ', '.join(['[{}]{}'.format(i, card) for i, card
+                          in enumerate(self.stack)])
+
+    def show_not_full_power(self):
+        return ', '.join(['[{}]{}'.format(i, card) for i, card
+                          in enumerate(self.stack)
+                          if not card.is_full_power()])
+
+    def show_full_power(self):
+        return ', '.join(['[{}]{}'.format(i, card) for i, card
+                          in enumerate(self.stack)
+                          if card.is_full_power()])
+
+    def exist_full_power(self):
+        return len([1 for card in self.stack if card.is_full_power()]) != 0
 
     def play(self, index, board, player_type, counter=False):
         self.stack[index].play(board, player_type, counter=counter)
@@ -102,15 +113,25 @@ class Trumps:
         self.trumps[index].play(board, player_type, counter=counter)
 
     def show_unused(self):
-        string = ''
-        for i, trump in enumerate(self.trumps):
-            if trump.used:
-                continue
-            string += '[1{}]{}, '.format(i, trump)
-        if len(string) == 0:
-            return ''
-        else:
-            return string[:-2]
+        return ', '.join(['[1{}]{}'.format(i, trump) for i, trump
+                          in enumerate(self.trumps)
+                          if not trump.used])
+
+    def show_unused_not_full_power(self):
+        return ', '.join(['[1{}]{}'.format(i, trump) for i, trump
+                          in enumerate(self.trumps)
+                          if not trump.used
+                          and not trump.is_full_power()])
+
+    def show_unused_full_power(self):
+        return ', '.join(['[1{}]{}'.format(i, trump) for i, trump
+                          in enumerate(self.trumps)
+                          if not trump.used
+                          and trump.is_full_power()])
+
+    def exist_unused_full_power(self):
+        return len([1 for trump in self.trumps if trump.is_full_power()
+                    and not trump.used]) != 0
 
 
 class Grants:

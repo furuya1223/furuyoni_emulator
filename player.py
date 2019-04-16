@@ -154,12 +154,28 @@ class Player:
     def show_unused_trumps(self):
         return self.trumps.show_unused()
 
+    def show_hand_not_full_power(self):
+        return self.hand.show_not_full_power()
+
+    def show_hand_full_power(self):
+        return self.hand.show_full_power()
+
+    def show_unused_trumps_not_full_power(self):
+        return self.trumps.show_unused_not_full_power()
+
+    def show_unused_trumps_full_power(self):
+        return self.trumps.show_unused_full_power()
+
+    def exist_full_power(self):
+        return self.hand.exist_full_power() or \
+               self.trumps.exist_unused_full_power()
+
     def get_counter(self):
         counter_normal_cards = \
-            [(i, card) for i, card in enumerate(self.hand) if card.counter]
+            [(i, card) for i, card in enumerate(self.hand) if card.is_counter()]
         counter_trumps = \
             [(i, trump) for i, trump in enumerate(self.trumps)
-             if not trump.used and trump.card.counter]
+             if not trump.used and trump.card.is_counter()]
         return counter_normal_cards, counter_trumps
 
     @generator
@@ -170,11 +186,11 @@ class Player:
             # 対応不可能
             return
         # 対応カードを表示
-        for i, card in counter_normal_cards:
-            print('[{}]: {} '.format(i, card), end='')
-        print()
-        for i, trump in counter_trumps:
-            print('[1{}]: {} '.format(i, trump), end='')
+        # TODO 表示をもっとコンパクトに記述する
+        print(', '.join(['[{}]: {}'.format(i, card) for i, card
+                         in counter_normal_cards]))
+        print(', '.join(['[1{}]: {}'.format(i, trump) for i, trump
+                         in counter_trumps]))
 
         receive = yield '対応する場合はカードの番号を入力してください\n'\
                         '対応しない場合は-1を入力してください'

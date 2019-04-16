@@ -45,8 +45,8 @@ class Board:
         for player_type in PlayerType:
             print(self.players[player_type])
         print('ダスト: {}'.format(self.dust.flowers))
-        print('手札: {}'.format(self.players[self.turn_player_type].hand))
-        print('切札: {}'.format(self.players[self.turn_player_type].trumps))
+        print('手札: {}'.format(self.turn_player().hand))
+        print('切札: {}'.format(self.turn_player().trumps))
         print('手番: {}'.format(self.turn_player_type))
         print('========================')
 
@@ -65,3 +65,6 @@ class Board:
 
     def opponent_player(self):
         return self.players[self.turn_player_type.opponent()]
+
+    def change_turn_player(self):
+        self.turn_player_type = self.turn_player_type.opponent()

@@ -1,4 +1,4 @@
-from card import AttackCard, ActionCard
+from card import AttackCard, ActionCard, CardSubType
 from attack import Attack
 from effect import Effect, EffectType
 from area import AreaType, Area
@@ -33,7 +33,8 @@ CARD_LIST[Goddess.UTSURO_HAJIMARI][0][0].append(
                 image_filename='na_00_hajimari_a_n_4.png')])
 CARD_LIST[Goddess.UTSURO_HAJIMARI][0][0].append(
     [AttackCard(Goddess.UTSURO_HAJIMARI, '二刀一閃', Attack([2, 3], 4, 2),
-                image_filename='na_00_hajimari_a_n_5.png', full_power=True)])
+                image_filename='na_00_hajimari_a_n_5.png',
+                sub_type=CardSubType.FULL_POWER)])
 
 
 def hohou1(board, player_type):
@@ -65,7 +66,8 @@ CARD_LIST[Goddess.UTSURO_HAJIMARI][0][0].append(
                content=lambda b, p: Area.move_flowers(b.distance, b.dust, 1),
                summary='間合→ダスト(1)')
     ],
-                counter=True, image_filename='na_00_hajimari_a_n_7.png')]
+                sub_type=CardSubType.COUNTER,
+                image_filename='na_00_hajimari_a_n_7.png')]
 )
 CARD_LIST[Goddess.UTSURO_HAJIMARI][0][1].append(
     [AttackCard(Goddess.UTSURO_HAJIMARI, '数多ノ刃', Attack([1, 2], 4, 3),
@@ -93,7 +95,8 @@ CARD_LIST[Goddess.UTSURO_HAJIMARI][0][1].append(
                content=lambda b, p: Area.move_flowers(
                    b.players[p.opponent()].aura, b.dust, 2),
                summary='相オーラ→ダスト(2)')
-    ], counter=True, trump=True, cost=4,
+    ],
+                sub_type=CardSubType.COUNTER, trump=True, cost=4,
                 image_filename='na_00_hajimari_a_s_3.png')])
 
 
