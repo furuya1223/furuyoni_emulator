@@ -17,6 +17,7 @@ CARD_LIST[メガミ番号][メガミ種別][カード種別][番号][追加番�
     2: 毒
 追加番号は、通常0。追加札ではEx*の番号がつく
 """
+
 # ウツロのかけら
 CARD_LIST[Goddess.UTSURO_HAJIMARI] = [[[], []]]
 CARD_LIST[Goddess.UTSURO_HAJIMARI][0][0].append(
@@ -96,8 +97,102 @@ CARD_LIST[Goddess.UTSURO_HAJIMARI][0][1].append(
                    b.players[p.opponent()].aura, b.dust, 2),
                summary='相オーラ→ダスト(2)')
     ],
-                sub_type=CardSubType.COUNTER, trump=True, cost=4,
+                sub_type=CardSubType.COUNTER, trump=True, cost=3,
                 image_filename='na_00_hajimari_a_s_3.png')])
+
+# ホノカのかけら
+CARD_LIST[Goddess.HONOKA_HAJIMARI] = [[[], []]]
+
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [AttackCard(Goddess.HONOKA_HAJIMARI, '花弁刃', Attack([4, 5], None, 1),
+                image_filename='na_00_hajimari_b_n_1.png')])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [AttackCard(Goddess.HONOKA_HAJIMARI, '桜刀', Attack([3, 4], 3, 1),
+                image_filename='na_00_hajimari_b_n_2.png')])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [AttackCard(Goddess.HONOKA_HAJIMARI, '瞬霊式', Attack([5], 3, 2,
+                                                       uncounterable=True),
+                image_filename='na_00_hajimari_b_n_3.png')])
+
+
+def kaeshigiri(board, player_type, counter):
+    if counter:
+        Area.move_flowers(board.dust, board.players[player_type].aura, 1)
+
+
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [AttackCard(Goddess.HONOKA_HAJIMARI, '返し斬り', Attack([3, 4], 2, 1),
+                effects=[
+                    Effect(effect_type=EffectType.AFTER_ATTACK,
+                           content=kaeshigiri,
+                           summary='【攻撃後】このカードを対応で'
+                                   '使用したならば、ダスト→自オーラ(1)')
+                ],
+                image_filename='na_00_hajimari_b_n_4.png',
+                sub_type=CardSubType.COUNTER)])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [ActionCard(Goddess.HONOKA_HAJIMARI, '歩法', effects=[
+        Effect(effect_type=EffectType.ACTION,
+               content=hohou1,
+               summary='集中力を1得る'),
+        Effect(effect_type=EffectType.ACTION,
+               content=hohou2, summary='間合←→ダスト(1)',
+               )
+    ],
+                image_filename='na_00_hajimari_b_n_5.png')])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [ActionCard(Goddess.HONOKA_HAJIMARI, '瞬霊式', effects=[
+        Effect(effect_type=EffectType.ACTION,
+               content=lambda b, p:
+               Area.move_flowers(b.players[p.opponent()].aura,
+                                 b.players[p].aura, 1),
+               summary='相オーラ→自オーラ(1)')
+    ],
+                sub_type=CardSubType.COUNTER,
+                image_filename='na_00_hajimari_b_n_6.png')])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0].append(
+    [ActionCard(Goddess.HONOKA_HAJIMARI, '光輝収束', effects=[
+        Effect(effect_type=EffectType.ACTION,
+               content=lambda b, p:
+               Area.move_flowers(b.dust, b.players[p].aura, 2),
+               summary='ダスト→自オーラ(2)'),
+        Effect(effect_type=EffectType.ACTION,
+               content=lambda b, p:
+               Area.move_flowers(b.dust, b.players[p].flare, 1),
+               summary='ダスト→自フレア(1)')
+    ],
+                sub_type=CardSubType.FULL_POWER,
+                image_filename='na_00_hajimari_b_n_7.png')])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][1].append(
+    [AttackCard(Goddess.HONOKA_HAJIMARI, '光満ちる一刀', Attack([3, 4], 4, 3),
+                trump=True, cost=5,
+                image_filename='na_00_hajimari_b_s_1.png')])
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][1].append(
+    [ActionCard(Goddess.HONOKA_HAJIMARI, '花吹雪の景色', effects=[
+        Effect(effect_type=EffectType.ACTION,
+               content=lambda b, p: Area.move_flowers(b[p.opponent()].aura,
+                                                      b.distance, 2),
+               summary='相オーラ→間合(2)')
+    ], trump=True, cost=4, image_filename='na_00_hajimari_b_s_2.png')])
+
+
+def seirei_tachi_no_kaze(board, _):
+    attack = board.attacks.pop()
+    if not attack.is_trump:
+        attack.canceled = True
+    board.attacks.append(attack)
+
+
+CARD_LIST[Goddess.HONOKA_HAJIMARI][0][1].append(
+    [ActionCard(Goddess.HONOKA_HAJIMARI, '精霊たちの風', effects=[
+        Effect(effect_type=EffectType.ACTION, content=seirei_tachi_no_kaze,
+               summary='対応した切札でない攻撃を打ち消す'),
+        Effect(effect_type=EffectType.ACTION,
+               content=lambda b, p: b.players[p].draw(1),
+               summary='カードを1枚引く')
+    ],
+                sub_type=CardSubType.COUNTER, trump=True, cost=3,
+                image_filename='na_00_hajimari_b_s_3.png')])
 
 
 # ユリナ

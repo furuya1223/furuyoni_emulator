@@ -10,13 +10,24 @@ from constants import NORMAL_ACTION, FULL_POWER_ACTION, BASIC_ACTION,\
 
 class Phase:
     @staticmethod
-    def setup_phase(board):
+    @generator
+    def setup_phase(board: Board):
         # 決闘開始前の3枚ドローとマリガン
         for player_type in PlayerType:
             board.players[player_type].draw(3)
-            # TODO: マリガン
+            print('[{}]\n'
+                  'マリガンする場合は戻す手札を戻す順（トップ側が先）で'
+                  '入力してください。\n'
+                  'マリガンしない場合は何も入力せずEnterを押してください'
+                  .format(player_type))
+            indices = yield board.players[player_type].show_hand()
+            if indices != '':
+                indices = list(map(int, indices.split(' ')))
+                board.players[player_type].mulligan(indices)
+                board.players[player_type].draw(len(indices))
 
     @staticmethod
+    @generator
     def opening_phase(board: Board):
         # 開始フェイズ
         player_type = board.turn_player_type
@@ -155,8 +166,8 @@ class Phase:
             # TODO: ここで伏せたら不正な行動を選んだときに伏せっぱなしになる
             board.turn_player().down(index)
 
-        # 行動の選択
-        print('行動を選んでください')
+        # 基本動作の選択
+        print('基本動作を選んでください')
         while True:
             basic_action_selection = yield '[{}]: {}, [{}]: 後退, ' \
                                            '[{}]: 纏い, [{}]: 宿し' \
@@ -226,14 +237,23 @@ class Phase:
                                             board.turn_player_type)
 
     @staticmethod
+    @generator
     def closing_phase(board):
         # 終了フェイズ
         # TODO: 手札上限の処理
         if len(board.turn_player().hand) > 2:
             print('手札の数が上限を超えています．伏せる手札を選んでください')
-            board.turn_player().show_hand()
-            index = list(map(int, input().split(' ')))
-            board.turn_player().down(index)
+            while True:
+                indices = yield board.turn_player().show_hand()
+                if indices == '':
+                    print('伏せる手札を選んでください')
+                    continue
+                indices = list(map(int, indices.split(' ')))
+                if len(indices) != len(board.turn_player().hand) - 2:
+                    print('残りの手札が2枚になるように選んでください')
+                else:
+                    break
+            board.turn_player().down(indices)
         # TODO: 傘の開閉判定
         # TODO: 切札の再起判定
         # TODO: 効果切れの判定（"このターンの終わりまで"のもの）

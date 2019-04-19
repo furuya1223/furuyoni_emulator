@@ -79,6 +79,8 @@ class AttackCard(Card):
                          effects=effects, sub_type=sub_type, trump=trump,
                          cost=cost, image_filename=image_filename)
         self.base_attack: Attack = attack
+        if trump:
+            self.base_attack.is_trump = True
 
     def play(self, board, player, counter=False, **kwargs):
         self.flare_check(board, player)

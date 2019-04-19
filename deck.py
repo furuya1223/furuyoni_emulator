@@ -25,7 +25,14 @@ class Deck:
         return str(self.normal_cards + self.trump_cards)
 
 
+# ウツロのかけら初期デッキ
 utsuro_no_kakera_1 = Deck(
     [CARD_LIST[Goddess.UTSURO_HAJIMARI][0][0][i][0] for i in range(7)],
     [CARD_LIST[Goddess.UTSURO_HAJIMARI][0][1][i][0] for i in range(3)]
+)
+
+# ホノカのかけら初期デッキ
+honoka_no_kakera_1 = Deck(
+    [CARD_LIST[Goddess.HONOKA_HAJIMARI][0][0][i][0] for i in range(7)],
+    [CARD_LIST[Goddess.HONOKA_HAJIMARI][0][1][i][0] for i in range(3)]
 )

@@ -12,6 +12,8 @@ class Attack:
         self.life_damage = life_damage          # ライフダメージ
         self.uncounterable = uncounterable      # 対応不可
         self.inevitable = inevitable            # 不可避
+        self.is_trump = False                   # 切札かどうか
+        self.canceled = False                   # 打ち消されたら True
 
     def __str__(self):
         string = '{} {}/{}'.format(
@@ -34,6 +36,10 @@ class Attack:
             # TODO: 対応後の諸々の判定（間合や決死などの条件の再確認）
             # TODO: 不可避の処理
         attack = board.attacks.pop()
+        if attack.canceled:
+            # 攻撃が打ち消された（【攻撃後】効果も無し）
+            return
+
         if attack.aura_damage is None or \
                 board.opponent_player().aura() < attack.aura_damage:
             # オーラダメージが - か、オーラが足りなければ強制的にライフで受ける
@@ -55,6 +61,7 @@ class Attack:
                     break
                 else:
                     print('入力が不正です！')
+
         if select_aura:
             # オーラダメージを選択
             # TODO: 「無音壁」展開中かどうか確認し、
@@ -68,3 +75,5 @@ class Attack:
             damage = min(board.opponent_player().life(), attack.life_damage)
             Area.move_flowers(board.opponent_player().life,
                               board.opponent_player().flare, damage)
+
+        # TODO: 【攻撃後】効果

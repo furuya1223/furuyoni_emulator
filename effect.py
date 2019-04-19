@@ -1,5 +1,7 @@
 from enum import Enum, auto
 from util import generator
+from inspect import signature, isgeneratorfunction
+from constants import YES, NO
 
 
 class EffectType(Enum):
@@ -27,11 +29,31 @@ class Effect:
             self.condition = condition
 
     @generator
-    def execute(self, board, player_type):
+    def execute(self, board, player_type, counter=False):
+        """
+        効果を実行する
+
+        Parameters
+        ----------
+        board: Board
+            現在の局面
+        player_type: PlayerType
+            プレイヤータイプ（先攻か後攻か）
+        counter: bool
+            対応での使用ならTrue
+        """
         print(self.summary)
         if self.condition(board, player_type):
-            receive = 1
+            receive = YES
             if self.arbitrary:
-                receive = yield 'この効果を使いますか？'
-            if receive == 1:
-                self.content(board, player_type)
+                receive = yield 'この効果を使いますか？[{}/{}]'.format(YES, NO)
+            if receive == NO:
+                raise StopIteration
+        sig = signature(self.content)
+        arguments = [board, player_type]
+        if 'counter' in sig.parameters:
+            arguments.append(counter)
+        if isgeneratorfunction(self.execute):
+            yield from self.content(*arguments)
+        else:
+            self.content(*arguments)

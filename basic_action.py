@@ -49,4 +49,4 @@ class BasicAction:
             raise FlowerLackException('離脱できません！')
         if board.distance() > board.expert_distance:
             raise DistanceException('離脱できません！')
-        Area.move_flowers(board.dust, board.distance(), 1)
+        Area.move_flowers(board.dust, board.distance, 1)

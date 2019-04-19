@@ -10,16 +10,27 @@ from constants import DISTANCE_DEFAULT
 class Board:
     """
     局面を表すクラス
+    TODO:
+        達人の間合を補正に対応できる形で実装する
 
-    Attributes:
-        distance (Distance): 間合エリア
-        dust (Dust): ダスト
-        out_of_game (OutOfGame): ゲーム外領域の桜花結晶
-        expert_distance (int): 達人の間合
-        turn_player_type (PlayerType): 現在のターンプレイヤー
-        start_distance (int): ターン開始時の間合
-        finished (bool): ゲームが終了したか否か
-        players (Player): プレイヤー（先攻と後攻）
+    Attributes
+    ----------
+    distance: Distance
+        間合エリア
+    dust: Dust
+        ダスト
+    out_of_game: OutOfGame
+        ゲーム外領域の桜花結晶
+    expert_distance: int
+        達人の間合
+    turn_player_type: PlayerType
+        現在のターンプレイヤー
+    start_distance: int
+        ターン開始時の間合
+    finished: bool
+        ゲームが終了したか否か
+    players: list(Player)
+        プレイヤー（先攻と後攻）
     """
     def __init__(self, first_deck, second_deck):
         self.distance = Distance()

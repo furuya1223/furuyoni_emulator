@@ -219,6 +219,9 @@ class Player:
         """
         self.downed.push_bottom(self.hand.pick(index))
 
+    def mulligan(self, indices):
+        self.stock.push_bottom(self.hand.pick(indices))
+
     def discard(self, index):
         """
         手札を捨てる
@@ -306,12 +309,12 @@ class Player:
             return
         if receive < 10:
             # 通常札
-            self.hand.play(receive, board, self.type)
+            self.hand.play(receive, board, self.type, counter=True)
             self.discard(receive)
         else:
             # 切札
             receive -= 10
-            self.trumps.play(receive, board, self.type)
+            self.trumps.play(receive, board, self.type, counter=True)
 
     def reconstruction(self, no_damage=False):
         """
