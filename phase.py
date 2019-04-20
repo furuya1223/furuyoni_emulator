@@ -14,7 +14,7 @@ class Phase:
     def setup_phase(board: Board):
         # 決闘開始前の3枚ドローとマリガン
         for player_type in PlayerType:
-            board.players[player_type].draw(3)
+            board.players[player_type].draw(3, board)
             print('[{}]\n'
                   'マリガンする場合は戻す手札を戻す順（トップ側が先）で'
                   '入力してください。\n'
@@ -24,7 +24,7 @@ class Phase:
             if indices != '':
                 indices = list(map(int, indices.split(' ')))
                 board.players[player_type].mulligan(indices)
-                board.players[player_type].draw(len(indices))
+                board.players[player_type].draw(len(indices), board)
 
     @staticmethod
     @generator
@@ -51,7 +51,7 @@ class Phase:
             Phase.reconstruction(board, player_type)
 
         # 2枚ドロー
-        board.players[player_type].draw(2)
+        board.players[player_type].draw(2, board)
 
     @staticmethod
     def reconstruction(board, player_type):

@@ -172,11 +172,12 @@
             
   <div class="section" id="module-effect">
 <span id="effect-module"></span><h1>effect module<a class="headerlink" href="#module-effect" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>効果に関連するモジュール</p>
 <dl class="class">
 <dt id="effect.EffectType">
 <em class="property">class </em><code class="descclassname">effect.</code><code class="descname">EffectType</code><a class="headerlink" href="#effect.EffectType" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
-<p>An enumeration.</p>
+<p>効果の種別</p>
 <dl class="attribute">
 <dt id="effect.EffectType.RULE">
 <code class="descname">RULE</code><em class="property"> = 1</em><a class="headerlink" href="#effect.EffectType.RULE" title="この定義へのパーマリンク">¶</a></dt>
@@ -223,6 +224,51 @@
 <dt id="effect.Effect">
 <em class="property">class </em><code class="descclassname">effect.</code><code class="descname">Effect</code><span class="sig-paren">(</span><em>effect_type</em>, <em>content</em>, <em>summary</em>, <em>arbitrariness=False</em>, <em>condition=None</em><span class="sig-paren">)</span><a class="headerlink" href="#effect.Effect" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>効果</p>
+<dl class="attribute">
+<dt id="effect.Effect.effect_type">
+<code class="descname">effect_type</code><a class="headerlink" href="#effect.Effect.effect_type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>効果の種別</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#effect.EffectType" title="effect.EffectType">EffectType</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="effect.Effect.arbitrariness">
+<code class="descname">arbitrariness</code><a class="headerlink" href="#effect.Effect.arbitrariness" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>任意性．使わないことが可能なら <code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="effect.Effect.content">
+<code class="descname">content</code><a class="headerlink" href="#effect.Effect.content" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>効果の本体．ジェネレータ関数の場合もある</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>func</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="effect.Effect.summary">
+<code class="descname">summary</code><a class="headerlink" href="#effect.Effect.summary" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>効果の概要を表す文字列</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="effect.Effect.execute">
 <code class="descname">execute</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#effect.Effect.execute" title="この定義へのパーマリンク">¶</a></dt>

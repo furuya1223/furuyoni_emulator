@@ -1,4 +1,4 @@
-from area import Life, Aura, Flare, Area, AreaType
+from area import Life, Aura, Flare, Area
 from cards import Cards, Hand, Trumps, Grants
 from deck import Deck
 from enum import Enum, auto
@@ -149,7 +149,7 @@ class Player:
         self.stock.shuffle()
 
     @generator
-    def draw_single(self):
+    def draw_single(self, board):
         """
         山札からカードを1枚ドローする
         山札が無ければ焦燥ダメージを受ける
@@ -165,21 +165,22 @@ class Player:
                                 '[0]: オーラ, [1]: ライフ'
                 select_aura = True if receive == '0' else False
             if select_aura:
-                Area.move_flowers(AreaType.AURA, AreaType.DUST, 1)
+                Area.move_flowers(self.aura, board.dust, 1)
             else:
-                Area.move_flowers(AreaType.LIFE, AreaType.FLARE, 1)
+                Area.move_flowers(self.life, self.flare, 1)
         else:
             self.hand.push_bottom(self.stock.pop())
 
-    def draw(self, number):
+    def draw(self, number, board):
         """
         山札から何枚かカードをドローする
 
         Args:
             number (int): ドローする枚数
+            board (Board): 現在の局面
         """
         for _ in range(number):
-            self.draw_single()
+            self.draw_single(board)
 
     def down(self, index):
         """

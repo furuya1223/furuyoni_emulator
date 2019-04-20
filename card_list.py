@@ -1,7 +1,7 @@
 from card import AttackCard, ActionCard, CardSubType
 from attack import Attack
 from effect import Effect, EffectType
-from area import AreaType, Area
+from area import Area
 from goddess import Goddess
 from util import generator
 
@@ -94,7 +94,7 @@ class CardList:
         self.card_list[Goddess.UTSURO_HAJIMARI][0][1].append(
             [ActionCard(Goddess.UTSURO_HAJIMARI, '闇凪ノ声', effects=[
                 Effect(effect_type=EffectType.ACTION,
-                       content=lambda b, p: b.players[p].draw(2),
+                       content=lambda b, p: b.players[p].draw(2, b),
                        summary='カードを2枚引く')
             ], trump=True, cost=4, image_filename='na_00_hajimari_a_s_2.png')])
 
@@ -126,8 +126,8 @@ class CardList:
             [AttackCard(Goddess.HONOKA_HAJIMARI, '桜刀', Attack([3, 4], 3, 1),
                         image_filename='na_00_hajimari_b_n_2.png')])
         self.card_list[Goddess.HONOKA_HAJIMARI][0][0].append(
-            [AttackCard(Goddess.HONOKA_HAJIMARI, '瞬霊式', Attack([5], 3, 2,
-                                                               uncounterable=True),
+            [AttackCard(Goddess.HONOKA_HAJIMARI, '瞬霊式',
+                        Attack([5], 3, 2, uncounterable=True),
                         image_filename='na_00_hajimari_b_n_3.png')])
 
         def kaeshigiri(board, player_type, counter):
@@ -204,7 +204,7 @@ class CardList:
                        content=seirei_tachi_no_kaze,
                        summary='対応した切札でない攻撃を打ち消す'),
                 Effect(effect_type=EffectType.ACTION,
-                       content=lambda b, p: b.players[p].draw(1),
+                       content=lambda b, p: b.players[p].draw(1, b),
                        summary='カードを1枚引く')
             ],
                         sub_type=CardSubType.COUNTER, trump=True, cost=3,
@@ -218,18 +218,19 @@ class CardList:
                         image_filename='na_01_yurina_o_n_1.png')])
 
         # 足捌き
-        self.card_list[Goddess.YURINA][0][0].append([ActionCard(1, '足捌き', effects=[
-            Effect(effect_type=EffectType.ACTION,
-                   condition=lambda b, p: b.distance() >= 4,
-                   content=lambda b, p: b.move_flower(AreaType.DISTANCE,
-                                                      AreaType.DUST, 2, p),
-                   summary='間合いが4以上なら 間合→ダスト(2)'),
-            Effect(effect_type=EffectType.ACTION,
-                   condition=lambda b, p: b.distance() <= 1,
-                   content=lambda b, p: Area.move_flowers(b.dust, b.distance,
-                                                          2),
-                   summary='間合いが1以下なら ダスト→間合(2)'),
-        ], image_filename='na_01_yurina_o_n_5_s2.png')])
+        self.card_list[Goddess.YURINA][0][0].append([
+            ActionCard(1, '足捌き', effects=[
+                Effect(effect_type=EffectType.ACTION,
+                       condition=lambda b, p: b.distance() >= 4,
+                       content=lambda b, p: b.move_flower(b.distance,
+                                                          b.dust, 2),
+                       summary='間合いが4以上なら 間合→ダスト(2)'),
+                Effect(effect_type=EffectType.ACTION,
+                       condition=lambda b, p: b.distance() <= 1,
+                       content=lambda b, p: Area.move_flowers(b.dust,
+                                                              b.distance, 2),
+                       summary='間合いが1以下なら ダスト→間合(2)'),
+            ], image_filename='na_01_yurina_o_n_5_s2.png')])
 
         # 月影落
         self.card_list[Goddess.YURINA][0][1].append(

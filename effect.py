@@ -1,3 +1,6 @@
+"""
+効果に関連するモジュール
+"""
 from enum import Enum, auto
 from util import generator
 from inspect import signature, isgeneratorfunction
@@ -5,6 +8,9 @@ from constants import YES, NO
 
 
 class EffectType(Enum):
+    """
+    効果の種別
+    """
     RULE = auto()          # 9-1-1 ルール上効果
     ALWAYS = auto()        # 9-1-2 【常時】効果
     ACTION = auto()        # 9-1-3 行動カード効果
@@ -16,10 +22,19 @@ class EffectType(Enum):
 
 
 class Effect:
+    """
+    効果
+
+    Attributes:
+        effect_type (EffectType): 効果の種別
+        arbitrariness (bool): 任意性．使わないことが可能なら ``True``
+        content (func): 効果の本体．ジェネレータ関数の場合もある
+        summary (str): 効果の概要を表す文字列
+    """
     def __init__(self, effect_type, content, summary,
                  arbitrariness=False, condition=None):
         self.effect_type = effect_type
-        self.arbitrary = arbitrariness
+        self.arbitrariness = arbitrariness
         self.content = content
         self.summary = summary
         if condition is None:
@@ -33,19 +48,15 @@ class Effect:
         """
         効果を実行する
 
-        Parameters
-        ----------
-        board: Board
-            現在の局面
-        player_type: PlayerType
-            プレイヤータイプ（先攻か後攻か）
-        counter: bool
-            対応での使用ならTrue
+        Args:
+            board (Board): 現在の局面
+            player_type (PlayerType): プレイヤータイプ（先攻か後攻か）
+            counter (bool): 対応での使用なら ``True`` ．デフォルトでは ``False``
         """
         print(self.summary)
         if self.condition(board, player_type):
             receive = YES
-            if self.arbitrary:
+            if self.arbitrariness:
                 receive = yield 'この効果を使いますか？[{}/{}]'.format(YES, NO)
             if receive == NO:
                 raise StopIteration

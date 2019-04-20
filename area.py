@@ -4,18 +4,6 @@ from constants import DISTANCE_DEFAULT, AURA_DEFAULT, LIFE_DEFAULT, \
     FLARE_DEFAULT, DUST_DEFAULT, INFINITY
 
 
-class AreaType(Enum):
-    DISTANCE = auto()
-    AURA = auto()
-    OPPONENT_AURA = auto()
-    LIFE = auto()
-    OPPONENT_LIFE = auto()
-    FLARE = auto()
-    OPPONENT_FLARE = auto()
-    DUST = auto()
-    OUT_OF_GAME = auto()
-
-
 class Area(metaclass=ABCMeta):
     """
     桜花結晶が存在しうる領域
