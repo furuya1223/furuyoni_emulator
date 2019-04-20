@@ -5,12 +5,5 @@ venv/
 # 実験用ファイル
 sandbox.py
 
-# Webアプリ関連
-brython/
-image/
-index.html
-index.css
-index.py
-
 # その他
 .DS_Store
