@@ -1,0 +1,23 @@
+player.PlayerType
+=================
+
+.. currentmodule:: player
+
+.. autoclass:: PlayerType
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PlayerType.FIRST
+      ~PlayerType.SECOND
+   
+   

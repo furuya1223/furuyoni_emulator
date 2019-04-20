@@ -1,0 +1,27 @@
+area.Area
+=========
+
+.. currentmodule:: area
+
+.. autoclass:: Area
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Area.__init__
+      ~Area.move_flowers
+      ~Area.receivable
+      ~Area.receive
+      ~Area.removable
+      ~Area.remove
+   
+   
+
+   
+   
+   

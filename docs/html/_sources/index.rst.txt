@@ -1,0 +1,39 @@
+.. furuyoni-emulator documentation master file, created by
+   sphinx-quickstart on Sat Apr 20 12:14:48 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to furuyoni-emulator's documentation!
+=============================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   area
+   attack
+   basic_action
+   board
+   card_list
+   card
+   cards
+   constants
+   deck
+   effect
+   exception
+   goddess
+   grant
+   moderator
+   phase
+   player
+   test
+   util
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

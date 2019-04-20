@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>player.Player &mdash; furuyoni-emulator  ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> furuyoni-emulator
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../area.html">area module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../attack.html">attack module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_action.html">basic_action module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../board.html">board module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../card_list.html">card_list module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../card.html">card module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cards.html">cards module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constants.html">constants module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deck.html">deck module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../effect.html">effect module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exception.html">exception module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../goddess.html">goddess module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../grant.html">grant module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moderator.html">moderator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../phase.html">phase module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../player.html">player module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">test module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">util module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">furuyoni-emulator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>player.Player</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_gen/player.Player.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="player-player">
+<h1>player.Player<a class="headerlink" href="#player-player" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="class">
+<dt id="player.Player">
+<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>player_type: player.PlayerType</em>, <em>deck: deck.Deck</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プレイヤーに紐づく情報を扱うクラス
+ライフ、オーラ、フレア、手札、山札、伏せ札、捨て札、切り札、
+展開中の付与札、集中力、傘など</p>
+<dl class="attribute">
+<dt id="player.Player.life">
+<code class="descname">life</code><a class="headerlink" href="#player.Player.life" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ライフ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../area.html#area.Life" title="area.Life">Life</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.aura">
+<code class="descname">aura</code><a class="headerlink" href="#player.Player.aura" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オーラ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../area.html#area.Aura" title="area.Aura">Aura</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.flare">
+<code class="descname">flare</code><a class="headerlink" href="#player.Player.flare" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>フレア</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../area.html#area.Flare" title="area.Flare">Flare</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.type">
+<code class="descname">type</code><a class="headerlink" href="#player.Player.type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プレイヤータイプ（先攻か後攻か）</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../player.html#player.PlayerType" title="player.PlayerType">PlayerType</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.vigor">
+<code class="descname">vigor</code><a class="headerlink" href="#player.Player.vigor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>集中力</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../player.html#player.Vigor" title="player.Vigor">Vigor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.hand">
+<code class="descname">hand</code><a class="headerlink" href="#player.Player.hand" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>手札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Hand" title="cards.Hand">Hand</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.trumps">
+<code class="descname">trumps</code><a class="headerlink" href="#player.Player.trumps" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>切札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Trumps" title="cards.Trumps">Trumps</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.stock">
+<code class="descname">stock</code><a class="headerlink" href="#player.Player.stock" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>山札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Cards" title="cards.Cards">Cards</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.downed">
+<code class="descname">downed</code><a class="headerlink" href="#player.Player.downed" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>伏せ札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Cards" title="cards.Cards">Cards</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.discarded">
+<code class="descname">discarded</code><a class="headerlink" href="#player.Player.discarded" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>捨て札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Cards" title="cards.Cards">Cards</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.grants">
+<code class="descname">grants</code><a class="headerlink" href="#player.Player.grants" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>付与札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Grants" title="cards.Grants">Grants</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="player.Player.extra_cards">
+<code class="descname">extra_cards</code><a class="headerlink" href="#player.Player.extra_cards" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>追加札</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../cards.html#cards.Cards" title="cards.Cards">Cards</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>player_type: player.PlayerType</em>, <em>deck: deck.Deck</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, furuya1223
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

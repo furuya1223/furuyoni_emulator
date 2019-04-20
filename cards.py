@@ -58,8 +58,18 @@ class Hand(Cards):
     def pick(self, index):
         """
         手札を選んで取り出す
-        :param index: 取り出す手札の添字
-        :return: 取り出したカード
+
+        Parameters
+        ----------
+        index: int or list of int
+            取り出す手札の添字
+
+        Returns
+        -------
+        card: Card
+            取り出したカード（1枚）
+        cards: list of card
+            取り出したカード（複数）
         """
         if isinstance(index, int):
             card = self.stack[index]

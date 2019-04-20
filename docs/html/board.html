@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>board module &mdash; furuyoni-emulator  ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="card_list module" href="card_list.html" />
+    <link rel="prev" title="basic_action module" href="basic_action.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> furuyoni-emulator
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="area.html">area module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attack.html">attack module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_action.html">basic_action module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">board module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_list.html">card_list module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card.html">card module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cards.html">cards module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html">constants module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deck.html">deck module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="effect.html">effect module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exception.html">exception module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="goddess.html">goddess module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grant.html">grant module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moderator.html">moderator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase.html">phase module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player.html">player module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">util module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">furuyoni-emulator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>board module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/board.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-board">
+<span id="board-module"></span><h1>board module<a class="headerlink" href="#module-board" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>局面クラス</p>
+<dl class="class">
+<dt id="board.Board">
+<em class="property">class </em><code class="descclassname">board.</code><code class="descname">Board</code><span class="sig-paren">(</span><em>first_deck</em>, <em>second_deck</em><span class="sig-paren">)</span><a class="headerlink" href="#board.Board" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>局面を表すクラス
+.. todo:: 達人の間合を補正に対応できる形で実装する</p>
+<dl class="attribute">
+<dt id="board.Board.distance">
+<code class="descname">distance</code><a class="headerlink" href="#board.Board.distance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>間合エリア</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="area.html#area.Distance" title="area.Distance">Distance</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.dust">
+<code class="descname">dust</code><a class="headerlink" href="#board.Board.dust" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ダスト</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="area.html#area.Dust" title="area.Dust">Dust</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.out_of_game">
+<code class="descname">out_of_game</code><a class="headerlink" href="#board.Board.out_of_game" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ゲーム外領域の桜花結晶</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="area.html#area.OutOfGame" title="area.OutOfGame">OutOfGame</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.expert_distance">
+<code class="descname">expert_distance</code><a class="headerlink" href="#board.Board.expert_distance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>達人の間合</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.turn_player_type">
+<code class="descname">turn_player_type</code><a class="headerlink" href="#board.Board.turn_player_type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在のターンプレイヤー</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="player.html#player.PlayerType" title="player.PlayerType">PlayerType</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.start_distance">
+<code class="descname">start_distance</code><a class="headerlink" href="#board.Board.start_distance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ターン開始時の間合</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.finished">
+<code class="descname">finished</code><a class="headerlink" href="#board.Board.finished" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ゲームが終了したか否か</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="board.Board.players">
+<code class="descname">players</code><a class="headerlink" href="#board.Board.players" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プレイヤー（先攻と後攻）</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(<a class="reference internal" href="player.html#player.Player" title="player.Player">Player</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="board.Board.show_board">
+<code class="descname">show_board</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#board.Board.show_board" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>局面情報を表示する</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="board.Board.show_unused_trump">
+<code class="descname">show_unused_trump</code><span class="sig-paren">(</span><em>player_type</em><span class="sig-paren">)</span><a class="headerlink" href="#board.Board.show_unused_trump" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="board.Board.is_close">
+<code class="descname">is_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#board.Board.is_close" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="board.Board.turn_player">
+<code class="descname">turn_player</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#board.Board.turn_player" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="board.Board.opponent_player">
+<code class="descname">opponent_player</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#board.Board.opponent_player" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="board.Board.change_turn_player">
+<code class="descname">change_turn_player</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#board.Board.change_turn_player" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="card_list.html" class="btn btn-neutral float-right" title="card_list module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="basic_action.html" class="btn btn-neutral float-left" title="basic_action module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, furuya1223
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

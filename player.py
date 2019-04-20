@@ -17,9 +17,9 @@ class PlayerType(Enum):
     def opponent(self):
         """
         相手のタイプを返す
-        Returns
-        -------
-        相手のプレイヤータイプ
+
+        Returns:
+            PlayerType: 相手のプレイヤータイプ
         """
         if self == PlayerType.FIRST:
             return PlayerType.SECOND
@@ -37,12 +37,9 @@ class Vigor:
     """
     集中力
 
-    Attributes
-    ----------
-    _value: int
-        集中力の値
-    _cowering: bool
-        畏縮状態かどうか
+    Attributes:
+        _value (int): 集中力の値
+        _cowering (bool): 畏縮状態かどうか
     """
     def __init__(self, player_type):
         if player_type == PlayerType.FIRST:
@@ -71,15 +68,11 @@ class Vigor:
         集中力を増やす加算代入演算子
         最大値を超えないようにする
 
-        Parameters
-        ----------
-        other: int
-            増やす量
+        Args:
+            other (int): 増やす量
 
-        Returns
-        -------
-        self: Vigor
-            増やした後の自身
+        Returns:
+            self (Vigor): 増やした後の自身
         """
         self._value = min(VIGOR_MAX, self._value + other)
         return self
@@ -89,15 +82,11 @@ class Vigor:
         集中力を減らす減算代入演算子
         最小値を下回らないようにする
 
-        Parameters
-        ----------
-        other: int
-            減らす量
+        Args:
+            other (int): 減らす量
 
-        Returns
-        -------
-        self: Vigor
-            減らした後の自身
+        Returns:
+            self (Vigor): 減らした後の自身
         """
         self._value = max(VIGOR_MIN, self._value - other)
         return self
@@ -111,9 +100,8 @@ class Vigor:
     def __call__(self, *args, **kwargs):
         """
         集中力の値を返す
-        Returns
-        -------
-        集中力の値
+        Returns:
+            int: 集中力の値
         """
         return self._value
 
@@ -124,32 +112,19 @@ class Player:
     ライフ、オーラ、フレア、手札、山札、伏せ札、捨て札、切り札、
     展開中の付与札、集中力、傘など
 
-    Attributes
-    ----------
-    life: Life
-        ライフ
-    aura: Aura
-        オーラ
-    flare: Flare
-        フレア
-    type: PlayerType
-        プレイヤータイプ（先攻か後攻か）
-    vigor: Vigor
-        集中力
-    hand: Hand
-        手札
-    trumps: Trumps
-        切札
-    stock: Cards
-        山札
-    downed: Cards
-        伏せ札
-    discarded: Cards
-        捨て札
-    grants: Grants
-        付与札
-    extra_cards: Cards
-        追加札
+    Attributes:
+        life (Life): ライフ
+        aura (Aura): オーラ
+        flare (Flare): フレア
+        type (PlayerType): プレイヤータイプ（先攻か後攻か）
+        vigor (Vigor): 集中力
+        hand (Hand): 手札
+        trumps (Trumps): 切札
+        stock (Cards): 山札
+        downed (Cards): 伏せ札
+        discarded (Cards): 捨て札
+        grants (Grants): 付与札
+        extra_cards (Cards): 追加札
     """
     def __init__(self, player_type: PlayerType, deck: Deck):
         self.life = Life()
@@ -200,10 +175,8 @@ class Player:
         """
         山札から何枚かカードをドローする
 
-        Parameters
-        ----------
-        number: int
-            ドローする枚数
+        Args:
+            number (int): ドローする枚数
         """
         for _ in range(number):
             self.draw_single()
@@ -212,24 +185,29 @@ class Player:
         """
         手札を伏せる
 
-        Parameters
-        ----------
-        index: int
-            伏せる手札の添字
+        Args:
+            index (int): 伏せる手札の添字
         """
         self.downed.push_bottom(self.hand.pick(index))
 
     def mulligan(self, indices):
+        """
+        マリガンする
+
+        Args:
+            indices (int or list of int): 山札に戻す手札の添字
+
+        Returns:
+
+        """
         self.stock.push_bottom(self.hand.pick(indices))
 
     def discard(self, index):
         """
         手札を捨てる
 
-        Parameters
-        ----------
-        index: int
-            捨てる手札の添字
+        Args:
+            index (int): 捨てる手札の添字
         """
         self.discarded.push_bottom(self.hand.pick(index))
 
@@ -250,28 +228,81 @@ class Player:
         return string
 
     def show_hand(self):
+        """
+        手札を添字付きで文字列化して返す
+
+        Returns:
+            str: 手札を表す添字付きの文字列
+        """
         return self.hand.show()
 
     def show_unused_trumps(self):
+        """
+        未使用の切札を添字付きで文字列化して返す
+
+        Returns:
+            str: 未使用の切札を表す添字付きの文字列
+        """
         return self.trumps.show_unused()
 
     def show_hand_not_full_power(self):
+        """
+        全力でない手札を添字付きで文字列化して返す
+
+        Returns:
+            str: 全力でない手札を表す添字付きの文字列
+        """
         return self.hand.show_not_full_power()
 
     def show_hand_full_power(self):
+        """
+        全力の手札を添字付きで文字列化して返す
+
+        Returns:
+            str: 全力の手札を表す添字付きの文字列
+        """
         return self.hand.show_full_power()
 
     def show_unused_trumps_not_full_power(self):
+        """
+        全力でない未使用の切札を添字付きで文字列化して返す
+
+        Returns:
+            str: 全力でない未使用の切札を表す添字付きの文字列
+        """
         return self.trumps.show_unused_not_full_power()
 
     def show_unused_trumps_full_power(self):
+        """
+        全力の未使用の切札を添字付きで文字列化して返す
+
+        Returns:
+            str: 全力の未使用の切札を表す添字付きの文字列
+        """
         return self.trumps.show_unused_full_power()
 
     def exist_full_power(self):
+        """
+        使用可能な全力札の存在を確認する
+
+        Returns:
+            bool: 使用可能な全力札があれば ``True`` ，無ければ ``False``
+        """
         return self.hand.exist_full_power() or \
-               self.trumps.exist_unused_full_power()
+            self.trumps.exist_unused_full_power()
 
     def get_counter(self):
+        """
+        対応の手札と未使用の切札を返す
+
+        Returns:
+            tuple: ``counter_normal_cards`` と ``counter_trumps`` の組を返す
+
+            - ``counter_normal_cards`` list of (int, :class:`~card.Card`):
+                対応手札と添字の組のリスト
+            - ``counter_trumps`` list of (int, :class:`~card.Trump`):
+                対応切札と添字の組のリスト
+        """
         counter_normal_cards = \
             [(i, card) for i, card in enumerate(self.hand)
              if card.is_counter()]
@@ -283,12 +314,10 @@ class Player:
     @generator
     def counter(self, board):
         """
-        対応を行うかどうかを尋ね、適切に処理する
+        対応を行うかどうかを尋ね，適切に処理する
 
-        Parameters
-        ----------
-        board: Board
-            現在の局面
+        Args:
+            board (Board): 現在の局面
         """
         # 対応可能か判定
         counter_normal_cards, counter_trumps = self.get_counter()
@@ -319,13 +348,12 @@ class Player:
     def reconstruction(self, no_damage=False):
         """
         山札の再構成を行う
-        TODO: 設置・虚魚の処理
 
-        Parameters
-        ----------
-        no_damage: bool, default False
-            ダメージを受けない場合にTrue
+        Args:
+            no_damage (bool, optional): ダメージを受けない場合に ``True``．
+                デフォルトは ``False``
         """
+        # TODO: 設置・虚魚の処理
         self.stock.push_bottom(self.downed.stack)
         self.downed.clear()
         self.stock.push_bottom(self.discarded.stack)
