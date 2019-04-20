@@ -172,40 +172,36 @@
             
   <div class="section" id="module-card_list">
 <span id="card-list-module"></span><h1>card_list module<a class="headerlink" href="#module-card_list" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<dl class="data">
-<dt id="card_list.CARD_LIST">
-<code class="descclassname">card_list.</code><code class="descname">CARD_LIST</code><em class="property"> = {&lt;Goddess.UTSURO_HAJIMARI: 15&gt;: [[[[&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.ActionCard object&gt;], [&lt;card.ActionCard object&gt;]], [[&lt;card.AttackCard object&gt;], [&lt;card.ActionCard object&gt;], [&lt;card.ActionCard object&gt;]]]], &lt;Goddess.HONOKA_HAJIMARI: 16&gt;: [[[[&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.AttackCard object&gt;], [&lt;card.ActionCard object&gt;], [&lt;card.ActionCard object&gt;], [&lt;card.ActionCard object&gt;]], [[&lt;card.AttackCard object&gt;], [&lt;card.ActionCard object&gt;], [&lt;card.ActionCard object&gt;]]]], &lt;Goddess.YURINA: 1&gt;: [[[[&lt;card.AttackCard object&gt;], [&lt;card.ActionCard object&gt;]], [[&lt;card.AttackCard object&gt;]]], [[], []]]}</em><a class="headerlink" href="#card_list.CARD_LIST" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>CARD_LIST[メガミ番号][メガミ種別][カード種別][番号][追加番号]
-メガミ番号は 1～14 （1-indexed）
-メガミ種別は 0, 1 （1がアナザー）
-カード種別は以下の通り</p>
+<dl class="class">
+<dt id="card_list.CardList">
+<em class="property">class </em><code class="descclassname">card_list.</code><code class="descname">CardList</code><a class="headerlink" href="#card_list.CardList" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>全カードのリスト</p>
+<p>CardList[メガミ番号][メガミ種別][カード種別][番号][追加番号]</p>
+<p>※仕様はまだ定まっていない</p>
+<p>メガミ番号は <a class="reference internal" href="goddess.html#goddess.Goddess" title="goddess.Goddess"><code class="xref py py-class docutils literal notranslate"><span class="pre">Goddess</span></code></a> に従う</p>
+<p>メガミ種別は 0, 1 （1がアナザー）</p>
+<p>カード種別は以下の通り</p>
 <blockquote>
-<div><p>0: 通常札
-1: 切札
-2: 毒</p>
+<div><ul class="simple">
+<li><p>0: 通常札</p></li>
+<li><p>1: 切札</p></li>
+<li><p>2: 毒</p></li>
+</ul>
 </div></blockquote>
 <p>追加番号は、通常0。追加札ではEx*の番号がつく</p>
+<dl class="attribute">
+<dt id="card_list.CardList.card_list">
+<code class="descname">card_list</code><a class="headerlink" href="#card_list.CardList.card_list" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>カードリスト</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="card_list.hohou1">
-<code class="descclassname">card_list.</code><code class="descname">hohou1</code><span class="sig-paren">(</span><em>board</em>, <em>player_type</em><span class="sig-paren">)</span><a class="headerlink" href="#card_list.hohou1" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="card_list.ku_no_gaitou">
-<code class="descclassname">card_list.</code><code class="descname">ku_no_gaitou</code><span class="sig-paren">(</span><em>board</em>, <em>_</em><span class="sig-paren">)</span><a class="headerlink" href="#card_list.ku_no_gaitou" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="card_list.kaeshigiri">
-<code class="descclassname">card_list.</code><code class="descname">kaeshigiri</code><span class="sig-paren">(</span><em>board</em>, <em>player_type</em>, <em>counter</em><span class="sig-paren">)</span><a class="headerlink" href="#card_list.kaeshigiri" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="card_list.seirei_tachi_no_kaze">
-<code class="descclassname">card_list.</code><code class="descname">seirei_tachi_no_kaze</code><span class="sig-paren">(</span><em>board</em>, <em>_</em><span class="sig-paren">)</span><a class="headerlink" href="#card_list.seirei_tachi_no_kaze" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+</dd></dl>
 
 </div>
 
