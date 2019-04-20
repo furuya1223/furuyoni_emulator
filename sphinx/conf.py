@@ -59,3 +59,7 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 autodoc_member_order = 'bysource'
+
+rst_prolog = """
+:github_url: https://github.com/furuya1223/furuyoni_emulator
+"""
