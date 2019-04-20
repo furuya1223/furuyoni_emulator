@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'furuyoni-emulator'
+project = 'ふるよにエミュレータ'
 copyright = '2019, furuya1223'
 author = 'furuya1223'
 
