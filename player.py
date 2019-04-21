@@ -97,7 +97,7 @@ class Vigor:
         else:
             return str(self._value)
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self):
         """
         集中力の値を返す
         Returns:
