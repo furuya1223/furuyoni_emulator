@@ -20,10 +20,10 @@ help:
 
 .PHONY: sphinx-apidoc
 sphinx-apidoc:
-	sphinx-apidoc -f -o . -M ../
+	sphinx-apidoc -f -o . -M ../modules/
 	# glob でインポートする時に邪魔なので削除
 	rm modules.rst
-	rm sandbox.rst
+	# rm sandbox.rst
 
 .PHONY: html
 # html:

@@ -26,7 +26,6 @@
    moderator
    phase
    player
-   test
    util
 
 

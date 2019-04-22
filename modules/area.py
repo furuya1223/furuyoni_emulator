@@ -1,5 +1,7 @@
+"""
+桜花結晶が存在する領域を扱うモジュール
+"""
 from abc import ABCMeta, abstractmethod
-from enum import Enum, auto
 from constants import DISTANCE_DEFAULT, AURA_DEFAULT, LIFE_DEFAULT, \
     FLARE_DEFAULT, DUST_DEFAULT, INFINITY
 
@@ -18,6 +20,7 @@ class Area(metaclass=ABCMeta):
     def removable(self):
         """
         減らせる桜花結晶の数を計算する
+
         Returns:
             減らせる桜花結晶の数
         """
@@ -27,6 +30,7 @@ class Area(metaclass=ABCMeta):
     def receivable(self):
         """
         増やせる桜花結晶の数を計算する
+
         Returns:
             増やせる桜花結晶の数
         """
@@ -35,6 +39,7 @@ class Area(metaclass=ABCMeta):
     def remove(self, value):
         """
         桜花結晶を減らす
+
         Args:
             value: 減らす桜花結晶の数
         """
@@ -43,6 +48,7 @@ class Area(metaclass=ABCMeta):
     def receive(self, value):
         """
         桜花結晶を増やす
+
         Args:
             value: 増やす桜花結晶の数
         """
@@ -50,6 +56,14 @@ class Area(metaclass=ABCMeta):
 
     @staticmethod
     def move_flowers(source, destination, value):
+        """
+        桜花結晶を可能な限り移動する関数
+
+        Args:
+            source (Area): 移動元エリア
+            destination (Area): 移動先エリア
+            value (int): 移動する数
+        """
         value = min(value, source.removable(), destination.receivable())
         source.remove(value)
         destination.receive(value)
@@ -62,15 +76,34 @@ class Area(metaclass=ABCMeta):
 
 
 class Distance(Area):
+    """
+    間合エリア
+
+    Attributes:
+        increment_token (int): 間合+1トークンの数
+        decrement_token (int): 間合-1トークンの数
+    """
     def __init__(self):
         super().__init__(DISTANCE_DEFAULT)
         self.increment_token = 0
         self.decrement_token = 0
 
     def removable(self):
+        """
+        減らせる桜花結晶の数を計算する
+
+        Returns:
+            減らせる桜花結晶の数
+        """
         return self.flowers - self.decrement_token
 
     def receivable(self):
+        """
+        増やせる桜花結晶の数を計算する
+
+        Returns:
+            増やせる桜花結晶の数
+        """
         return 10 - self.flowers - self.increment_token
 
     def __call__(self, *args, **kwargs):
@@ -89,55 +122,130 @@ class Distance(Area):
 
 
 class Aura(Area):
+    """
+    オーラ
+    """
     def __init__(self):
         super().__init__(AURA_DEFAULT)
 
     def removable(self):
+        """
+        減らせる桜花結晶の数を計算する
+
+        Returns:
+            減らせる桜花結晶の数
+        """
         return self.flowers
 
     def receivable(self):
+        """
+        増やせる桜花結晶の数を計算する
+
+        Returns:
+            増やせる桜花結晶の数
+        """
         return 5 - self.flowers
 
 
 class Life(Area):
+    """
+    ライフ
+    """
     def __init__(self):
         super().__init__(LIFE_DEFAULT)
 
     def removable(self):
+        """
+        減らせる桜花結晶の数を計算する
+
+        Returns:
+            減らせる桜花結晶の数
+        """
         return self.flowers
 
     def receivable(self):
+        """
+        増やせる桜花結晶の数を計算する
+
+        Returns:
+            増やせる桜花結晶の数
+        """
         return INFINITY
 
 
 class Flare(Area):
+    """
+    フレア
+    """
     def __init__(self):
         super().__init__(FLARE_DEFAULT)
 
     def removable(self):
+        """
+        減らせる桜花結晶の数を計算する
+
+        Returns:
+            減らせる桜花結晶の数
+        """
         return self.flowers
 
     def receivable(self):
+        """
+        増やせる桜花結晶の数を計算する
+
+        Returns:
+            増やせる桜花結晶の数
+        """
         return INFINITY
 
 
 class Dust(Area):
+    """
+    ダスト
+    """
     def __init__(self):
         super().__init__(DUST_DEFAULT)
 
     def removable(self):
+        """
+        減らせる桜花結晶の数を計算する
+
+        Returns:
+            減らせる桜花結晶の数
+        """
         return self.flowers
 
     def receivable(self):
+        """
+        増やせる桜花結晶の数を計算する
+
+        Returns:
+            増やせる桜花結晶の数
+        """
         return INFINITY
 
 
 class OutOfGame(Area):
+    """
+    ゲーム外
+    """
     def __init__(self):
         super().__init__(INFINITY)
 
     def removable(self):
+        """
+        減らせる桜花結晶の数を計算する
+
+        Returns:
+            減らせる桜花結晶の数
+        """
         return INFINITY
 
     def receivable(self):
+        """
+        増やせる桜花結晶の数を計算する
+        
+        Returns:
+            増やせる桜花結晶の数
+        """
         return INFINITY

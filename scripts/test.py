@@ -1,3 +1,6 @@
+"""
+テストを行うスクリプト
+"""
 from moderator import Moderator
 from deck import utsuro_no_kakera_1, honoka_no_kakera_1
 
